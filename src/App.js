@@ -16,6 +16,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import ('./config/ReactoToTronConfig').then(() => console.log('Reactotron Configured'));
+
 const App: () => React$Node = () => {
   return (
     <>
@@ -37,6 +39,7 @@ const App: () => React$Node = () => {
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
                 screen and then come back to see your edits.
               </Text>
+              
             </View>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>See Your Changes</Text>

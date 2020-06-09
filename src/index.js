@@ -12,11 +12,8 @@ import { store, persistor } from './store';
 
 import App from './App';
 
-console.ignoredYellowBox = true;
 export default function Index() {
-  useEffect(() => {
-    console.ignoredYellowBox = true;
-  }, []);
+
   return (
     <Provider store={store}>
       <StatusBar barStyle="light-content" backgroundColor={colors.primary} />

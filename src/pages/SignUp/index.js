@@ -14,18 +14,14 @@ import {
   FormInput,
   TextHolderInput,
   SubmitButton,
-  Footer,
-  TextFooter,
-  LinkFooter,
   TextAlert,
 } from './styles';
-import NavigationService from '../../services/navigation';
 
-import { signIn } from '../../store/modules/auth/action';
+import { signUp } from '../../store/modules/auth/action';
 
-export default function SignIn({ navigation }) {
-  console.ignoredYellowBox = true;
-  const loginFailed = useSelector(state => state.auth.loginFailed);
+export default function SignUp({ navigation }) {
+
+  const emailConflict = useSelector(state => state.auth.emailConflict);
 
   const dispatch = useDispatch();
 
@@ -33,15 +29,18 @@ export default function SignIn({ navigation }) {
       <ScrollView>
         <Container>
           <Body>
-            <Title>Faça login para ter acesso as demais funcionalidades</Title>
+            <Title>Preencha as informações abaixo</Title>
             <Formik
               onSubmit={values => {
                 dispatch(
-                  signIn(values.email, values.password),
+                  signUp(values.nickname, values.email, values.password),
                 )
               }}
-              initialValues={{ email: 'teste@teste.com', password: '123' }}
+              initialValues={{ nickname: 'teste', email: 'teste@teste.com', password: '123' }}
               validationSchema={yup.object().shape({
+                nickname: yup
+                  .string()
+                  .required('Apelido é obrigatório'),
                 email: yup
                   .string()
                   .email('E-mail inválido')
@@ -59,6 +58,20 @@ export default function SignIn({ navigation }) {
                 handleSubmit,
               }) => (
                 <>
+                <TextHolderInput>Apelido</TextHolderInput>
+                  <FormInput
+                    maxLength={250}
+                    error={errors.nickname}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    value={values.nickname}
+                    onChangeText={handleChange('nickname')}
+                  />
+                  {touched.nickname && errors.nickname && (
+                    <TextAlert>{errors.nickname}</TextAlert>
+                  )}
+
                   <TextHolderInput>E-mail</TextHolderInput>
                   <FormInput
                     maxLength={250}
@@ -87,24 +100,17 @@ export default function SignIn({ navigation }) {
                     <TextAlert>{errors.password}</TextAlert>
                   )}
 
-                  {loginFailed && (
+                  {emailConflict && (
                     <TextAlert>
-                      E-mail e/ou senha inválidos
+                      E-mail já cadastrado na base
                     </TextAlert>
                   )}
 
                   <SubmitButton
-                    title="Entrar"
+                    title="Criar conta"
                     onPress={handleSubmit}>
                     <Text />
                   </SubmitButton>
-                  <Footer>
-                    <TextFooter>Não possui conta?</TextFooter>
-                    <LinkFooter
-                      onPress={() => NavigationService.navigate('SignUp')}>
-                      Cadastre-se
-                    </LinkFooter>
-                  </Footer>
                 </>
               )}
             </Formik>

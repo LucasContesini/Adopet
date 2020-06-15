@@ -8,13 +8,15 @@ import {
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Welcome from './pages/Welcome';
+import AnimalSignUp from './pages/AnimalSignUp';
+import AnimalImageSignUp from './pages/AnimalImageSignUp';
 import { createStackNavigator } from 'react-navigation-stack';
 
-const WelcomeStack = createStackNavigator({
-  Welcome: {
-    screen: Welcome,
-  }
+const AnimalSignUpStack = createStackNavigator({
+  Cadastro: {
+    screen: AnimalSignUp,
+  },
+  AnimalImageSignUp,
 });
 
 const AuthenticationSwitch = createSwitchNavigator({
@@ -22,15 +24,15 @@ const AuthenticationSwitch = createSwitchNavigator({
   SignUp,
 });
 
-export default () =>
+export default isSigned =>
   createAppContainer(
     createSwitchNavigator(
       {
         AuthenticationSwitch,
-        WelcomeStack,
+        AnimalSignUpStack,
       },
       {
-        initialRouteName: 'AuthenticationSwitch',
+        initialRouteName: isSigned ? 'AnimalSignUpStack' : 'AuthenticationSwitch',
       },
     ),
   );

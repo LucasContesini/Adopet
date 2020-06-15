@@ -14,9 +14,9 @@ export function* signIn({ payload }) {
             axios.post,
             `${baseUrl}/auth`,
             body);
-
+            console.tron.log(response);
             yield put(signInSuccess(response.data.token));
-            NavigationService.navigate('Welcome');
+            NavigationService.navigate('AnimalSignUp');
     } catch(error) {
         console.tron.log(error.response);
         if(error.response.status === 401) {

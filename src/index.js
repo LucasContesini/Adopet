@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
-import React, {useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -11,6 +11,7 @@ import './config/ReactoToTronConfig';
 import { store, persistor } from './store';
 
 import App from './App';
+
 
 export default function Index() {
 

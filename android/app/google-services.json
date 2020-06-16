@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "113404148644",
-    "firebase_url": "https://adopet-ee53c.firebaseio.com",
-    "project_id": "adopet-ee53c",
-    "storage_bucket": "adopet-ee53c.appspot.com"
+    "project_number": "582839302064",
+    "firebase_url": "https://adopet-17316.firebaseio.com",
+    "project_id": "adopet-17316",
+    "storage_bucket": "adopet-17316.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:113404148644:android:d27d8d51ab169b8be8df31",
+        "mobilesdk_app_id": "1:582839302064:android:f06742e856791090104875",
         "android_client_info": {
           "package_name": "com.adopet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "113404148644-q4k83hua0h402f4vl61ctv8h1iog2vsr.apps.googleusercontent.com",
+          "client_id": "582839302064-kdulv4h95jbp5vhem6vd3vhg0vrr5ecm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCepfPq_Zf6i2zgDskM7VpH5DcycqfkSM4"
+          "current_key": "AIzaSyD58V-wAwiHExLM75scHRCJTTVbSfG56MI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "113404148644-q4k83hua0h402f4vl61ctv8h1iog2vsr.apps.googleusercontent.com",
+              "client_id": "582839302064-kdulv4h95jbp5vhem6vd3vhg0vrr5ecm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

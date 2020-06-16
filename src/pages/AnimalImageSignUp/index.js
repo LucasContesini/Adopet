@@ -6,7 +6,6 @@ import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import storage from '@react-native-firebase/storage';
 import {
   Container,
   Body,
@@ -20,7 +19,6 @@ import {
 import { saveAnimal } from '../../store/modules/animal/action';
 
 const noPhoto = 'https://www.tribunadeituverava.com.br/wp-content/uploads/2017/12/sem-foto-sem-imagem-300x186.jpeg'; 
-const reference = storage().ref('/images');
 
 export default function AnimalImageSignUp({ navigation }) {
 
@@ -83,10 +81,8 @@ export default function AnimalImageSignUp({ navigation }) {
           'JPEG',
           100,
           rotation,
-        ).then(async ({ uri }) => {
-          console.tron.log(uri);
-          await reference.putFile(uri);
-          // setImages([...images, uri]);
+        ).then(({ uri }) => {
+          setImages([...images, uri]);
         });
       }
     });

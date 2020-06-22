@@ -18,12 +18,11 @@ import {
   SubmitButton,
   TextAlert,
   CheckBoxRow,
+  FormInputMask,
 } from './styles';
 
 import { addAnimalInfo, getAnimalType } from '../../store/modules/animal/action';
-import animal from '../../store/modules/animal/reducer';
-
-import NavigationService from '../../services/navigation';
+import DateHelper from '../../helpers/dateHelper';
 
 export default function AnimalSignUp({ navigation }) {
 
@@ -62,14 +61,24 @@ export default function AnimalSignUp({ navigation }) {
                 );
                 navigation.navigate('AnimalImageSignUp');
               }}
-              initialValues={{ name: 'teste', breed: '', birthDate: '123', zipCode: '1234', description: '12345' }}
+              initialValues={{ name: 'teste', breed: '', birthDate: null, zipCode: '', description: 'teste' }}
               validationSchema={yup.object().shape({
                 name: yup
                   .string()
                   .required('Nome é obrigatório'),
-                  zipCode: yup
+                zipCode: yup
                   .string()
                   .required('Cep é obrigatório'),
+                birthDate: yup
+                  .string()
+                  .test('date', 'Essa data está inválida', date => {
+                    if (date) {
+                      if (DateHelper.isDate(date)) {
+                        return true;
+                      }
+                      return false;
+                    }
+                  }),
               })}>
               {({
                 values,
@@ -118,28 +127,24 @@ export default function AnimalSignUp({ navigation }) {
                     <TextAlert>{errors.breed}</TextAlert>
                   )}
 
-                  <TextHolderInput>Data de nascimento</TextHolderInput>
-                  <FormInput
-                    error={errors.birthDate}
-                    type="datetime"
+                  <TextHolderInput>Data de Nascimento</TextHolderInput>
+                  <FormInputMask
+                    error={!errors.birthDate}
+                    type={'datetime'}
                     options={{
                       format: 'DD/MM/YYYY',
                     }}
-                    returnKeyType="next"
                     value={values.birthDate}
                     onChangeText={handleChange('birthDate')}
                   />
-
                   {touched.birthDate && errors.birthDate && (
-                    <TextAlert>{errors.birthDate}</TextAlert>
+                    <TextAlert>Data inválida</TextAlert>
                   )}
 
-                  <TextHolderInput>Cep</TextHolderInput>
-                  <FormInput
-                    maxLength={250}
-                    error={errors.zipCode}
-                    autoCorrect={false}
-                    autoCapitalize="none"
+                  <TextHolderInput>CEP</TextHolderInput>
+                  <FormInputMask
+                    error={true}
+                    type={'zip-code'}
                     returnKeyType="next"
                     value={values.zipCode}
                     onChangeText={handleChange('zipCode')}

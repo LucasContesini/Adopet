@@ -25,3 +25,18 @@ export function getAnimalTypeSuccess(animalTypes) {
         payload: { animalTypes }
     }
 }
+
+
+export function getAllAnimal() {
+    return {
+        type: '@animal/GET_ALL_ANIMAL',
+        payload: {}
+    }
+}
+
+export function getAllAnimalSuccess(animals) {
+    return {
+        type: '@animal/GET_ALL_ANIMAL_SUCCESS',
+        payload: { animals }
+    }
+}

@@ -17,6 +17,7 @@ import {
   SubmitButton,
 } from './styles';
 import { saveAnimal } from '../../store/modules/animal/action';
+import DateHelper from '../../helpers/dateHelper';
 
 const noPhoto = 'https://www.tribunadeituverava.com.br/wp-content/uploads/2017/12/sem-foto-sem-imagem-300x186.jpeg'; 
 
@@ -35,9 +36,11 @@ export default function AnimalImageSignUp({ navigation }) {
   const zipCode = useSelector(state => state.animal.zipCode);
   const description = useSelector(state => state.animal.description);
 
+  const birthDateValid = DateHelper.formatDateToPersist(birthDate);
+
 
   const addAnimal = () => {
-    dispatch(saveAnimal(name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images));
+    dispatch(saveAnimal(name, type, breed, birthDateValid, vaccinated, castrated, zipCode, description, images));
   }
 
   const addPhoto = () => {

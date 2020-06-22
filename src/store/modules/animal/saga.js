@@ -3,7 +3,7 @@ import axios from 'axios';
 import baseUrl from '../../../services/baseUrl';
 import NavigationService from '../../../services/navigation';
 
-import { getAnimalTypeSuccess } from './action';
+import { getAnimalTypeSuccess, getAllAnimalSuccess } from './action';
 
 export function* findAnimalType({ payload }) {
     try {
@@ -17,6 +17,22 @@ export function* findAnimalType({ payload }) {
             `${baseUrl}/animal/type`
         );
         yield put(getAnimalTypeSuccess(response.data));
+    } catch(error) {   
+    }
+}
+
+export function* findAllAnimal({ payload }) {
+    try {
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        
+        const response = yield call (
+            axios.get,
+            `${baseUrl}/animal`
+        );
+        yield put(getAllAnimalSuccess(response.data));
     } catch(error) {   
     }
 }
@@ -48,6 +64,7 @@ export function* saveAnimal({payload}) {
             body
         );
         console.tron.log(response);
+        NavigationService.navigate('AnimalList');
     } catch(error) {
         console.tron.log(error);
     }
@@ -55,5 +72,6 @@ export function* saveAnimal({payload}) {
 
 export default all([
     takeLatest('@animal/GET_ANIMAL_TYPE', findAnimalType),
+    takeLatest('@animal/GET_ALL_ANIMAL', findAllAnimal),
     takeLatest('@animal/SAVE_ANIMAL', saveAnimal),
 ]);

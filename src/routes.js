@@ -10,6 +10,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AnimalSignUp from './pages/AnimalSignUp';
 import AnimalImageSignUp from './pages/AnimalImageSignUp';
+import AnimalList from './pages/AnimalList';
+
 import { createStackNavigator } from 'react-navigation-stack';
 
 const AnimalSignUpStack = createStackNavigator({
@@ -24,12 +26,17 @@ const AuthenticationSwitch = createSwitchNavigator({
   SignUp,
 });
 
+const AnimalListSwitch = createSwitchNavigator({
+  AnimalList,
+});
+
 export default isSigned =>
   createAppContainer(
     createSwitchNavigator(
       {
         AuthenticationSwitch,
         AnimalSignUpStack,
+        AnimalListSwitch,
       },
       {
         initialRouteName: isSigned ? 'AnimalSignUpStack' : 'AuthenticationSwitch',

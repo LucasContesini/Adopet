@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     description: '',
     images: [],
     animalTypes: [],
+    animals: [],
 };
 
 export default function animal(state = INITIAL_STATE, action) {
@@ -26,6 +27,10 @@ export default function animal(state = INITIAL_STATE, action) {
         }
         case '@animal/GET_ANIMAL_TYPE_SUCCESS': {
             INITIAL_STATE.animalTypes = action.payload.animalTypes;
+            break;
+        }
+        case '@animal/GET_ALL_ANIMAL_SUCCESS': {
+            INITIAL_STATE.animals = action.payload.animals;
             break;
         }
         

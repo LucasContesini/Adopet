@@ -9,6 +9,7 @@ import colors from '../../config/color';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import InputMask from '../../components/InputMask';
 
 export const Container = styled.SafeAreaView.attrs({})`
   margin-top: ${hp('-5%')};
@@ -22,6 +23,12 @@ export const Body = styled.View.attrs({})`
 
 export const CheckBoxRow = styled.View.attrs({})`
   flex-direction: row;
+`;
+
+export const FormInputMask = styled(InputMask).attrs({})`
+  width: ${wp('80%')};
+  align-content: center;
+  margin-bottom: ${hp('3%')};
 `;
 
 export const Title = styled.Text`

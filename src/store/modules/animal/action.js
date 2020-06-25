@@ -40,3 +40,18 @@ export function getAllAnimalSuccess(animals) {
         payload: { animals }
     }
 }
+
+export function getAnimalInfoById(id) {
+    return {
+        type: '@animal/GET_ANIMAL_BY_ID',
+        payload: { id }
+    }
+}
+
+export function getAnimalInfoByIdSuccess(animalInfo) {
+    return {
+        type: '@animal/GET_ANIMAL_BY_ID_SUCCESS',
+        payload: { animalInfo }
+    }
+}
+

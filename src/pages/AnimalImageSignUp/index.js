@@ -19,7 +19,7 @@ import {
 import { saveAnimal } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
 
-const noPhoto = 'https://www.tribunadeituverava.com.br/wp-content/uploads/2017/12/sem-foto-sem-imagem-300x186.jpeg'; 
+const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
 
 export default function AnimalImageSignUp({ navigation }) {
 

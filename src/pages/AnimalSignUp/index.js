@@ -61,14 +61,14 @@ export default function AnimalSignUp({ navigation }) {
                 );
                 navigation.navigate('AnimalImageSignUp');
               }}
-              initialValues={{ name: 'teste', breed: '', birthDate: null, zipCode: '', description: 'teste' }}
+              initialValues={{ name: 'teste', breed: '', birthDate: '21/10/1998', zipCode: '', description: 'teste' }}
               validationSchema={yup.object().shape({
                 name: yup
                   .string()
                   .required('Nome é obrigatório'),
-                zipCode: yup
-                  .string()
-                  .required('Cep é obrigatório'),
+                // zipCode: yup
+                //   .string()
+                //   .required('Cep é obrigatório'),
                 birthDate: yup
                   .string()
                   .test('date', 'Essa data está inválida', date => {

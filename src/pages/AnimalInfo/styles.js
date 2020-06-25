@@ -31,7 +31,8 @@ export const Title = styled.Text`
 
 export const Description = styled.Text`
   font-family: Avenir Next;
-  font-size: ${wp('5%')};
+  padding-bottom: ${hp('1%')};
+  font-size: ${wp('4%')};
 `;
 
 export const AddPhotoButton = styled(Button).attrs({
@@ -79,19 +80,16 @@ export const Header = styled.View`
 `;
 
 export const InfoCard = styled.View`
-  width: ${wp('90%')};
   border-width: 1;
   padding-top: ${hp('1%')};
   padding-left: ${hp('1%')};
   padding-right: ${hp('1%')};
   padding-bottom: ${hp('1%')};
   border-color: #303030;
-  flex-direction: row;
   justify-content: space-between;
 `;
 
 export const AnimalImage = styled.Image`
-  width: ${wp('90%')};
   height: ${hp('50%')};
   margin-top: 5px;
 `;

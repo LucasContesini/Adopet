@@ -39,3 +39,17 @@ export function signUpFailed() {
         payload: {}
     }
 }
+
+export function getUserInfo() {
+    return {
+        type: '@auth/GET_USER_INFO',
+        payload: {}
+    }
+}
+
+export function getUserInfoSuccess(id, email, nickname) {
+    return {
+        type: '@auth/GET_USER_INFO_SUCCESS',
+        payload: { id, email, nickname }
+    }
+}

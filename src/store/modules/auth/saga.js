@@ -1,9 +1,9 @@
-import { takeLatest, all, call, put } from 'redux-saga/effects';
+import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import baseUrl from '../../../services/baseUrl';
 import NavigationService from '../../../services/navigation';
 
-import { signInSuccess, signInFailed, signUpSuccess, signUpFailed } from './action';
+import { signInSuccess, signInFailed, signUpSuccess, signUpFailed, getUserInfoSuccess } from './action';
 export function* signIn({ payload }) {
     try {
         const body = {
@@ -22,8 +22,26 @@ export function* signIn({ payload }) {
         if(error.response.status === 401) {
             yield put(signInFailed());
         }
-    }
-    
+    }   
+}
+
+export function* getUserInfo({ payload }) {
+    try {
+
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+
+        const response = yield call(
+            axios.get,
+            `${baseUrl}/user`);
+
+        const { id, email, nickname } = response.data;
+            yield put(getUserInfoSuccess(id, email, nickname));
+    } catch(error) {
+    }   
 }
 
 export function* signUp({ payload }) {
@@ -50,4 +68,5 @@ export function* signUp({ payload }) {
 export default all([
     takeLatest('@auth/SIGN_IN', signIn),
     takeLatest('@auth/SIGN_UP', signUp),
+    takeLatest('@auth/GET_USER_INFO', getUserInfo),
 ]);

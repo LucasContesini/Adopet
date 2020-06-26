@@ -26,6 +26,12 @@ export default function auth(state = INITIAL_STATE, action) {
             INITIAL_STATE.emailConflict = false;
             break;
         }
+        case '@auth/GET_USER_INFO_SUCCESS': {
+            INITIAL_STATE.id = action.payload.id;
+            INITIAL_STATE.email = action.payload.email;
+            INITIAL_STATE.nickname = action.payload.nickname;
+            break;
+        }
         case '@auth/SIGN_UP_FAILED': {
             INITIAL_STATE.emailConflict = true;
             INITIAL_STATE.id = '';

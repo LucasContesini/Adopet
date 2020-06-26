@@ -31,11 +31,10 @@ export const Title = styled.Text`
 
 export const Description = styled.Text`
   font-family: Avenir Next;
-  padding-bottom: ${hp('1%')};
-  font-size: ${wp('4%')};
+  font-size: ${wp('5%')};
 `;
 
-export const AddPhotoButton = styled(Button).attrs({
+export const AddButton = styled(Button).attrs({
   containerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -53,6 +52,62 @@ export const AddPhotoButton = styled(Button).attrs({
   },
 })``;
 
+export const AdoptButton = styled(Button).attrs({
+  containerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: hp('1%'),
+  },
+  buttonStyle: {
+    marginTop: hp('4%'),
+    height: hp('8%'),
+    width: wp('30%'),
+    backgroundColor: colors.accept,
+    borderRadius: hp('4%'),
+  },
+  titleStyle: {
+    fontFamily: 'Avenir Next',
+    fontSize: hp('3%'),
+  },
+})``;
+
+export const EditButton = styled(Button).attrs({
+  containerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: hp('1%'),
+  },
+  buttonStyle: {
+    marginTop: hp('4%'),
+    height: hp('8%'),
+    width: wp('25%'),
+    backgroundColor: colors.grey,
+    borderRadius: hp('4%'),
+  },
+  titleStyle: {
+    fontFamily: 'Avenir Next',
+    fontSize: hp('3%'),
+  },
+})``;
+
+export const DeleteButton = styled(Button).attrs({
+  containerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: hp('1%'),
+  },
+  buttonStyle: {
+    marginTop: hp('4%'),
+    height: hp('8%'),
+    width: wp('25%'),
+    backgroundColor: colors.fail,
+    borderRadius: hp('4%'),
+  },
+  titleStyle: {
+    fontFamily: 'Avenir Next',
+    fontSize: hp('3%'),
+  },
+})``;
 export const SubmitButton = styled(Button).attrs({
   containerStyle: {
     justifyContent: 'center',
@@ -80,15 +135,19 @@ export const Header = styled.View`
 `;
 
 export const InfoCard = styled.View`
+  width: ${wp('90%')};
   border-width: 1;
   padding-top: ${hp('1%')};
   padding-left: ${hp('1%')};
   padding-right: ${hp('1%')};
   padding-bottom: ${hp('1%')};
   border-color: #303030;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const AnimalImage = styled.Image`
+  width: ${wp('90%')};
   height: ${hp('50%')};
   margin-top: 5px;
 `;

@@ -48,7 +48,7 @@ export const FormInput = styled(Input)`
 export const TextHolderInput = styled.Text`
   font-family: Avenir Next;
   font-size: ${hp('2%')};
-  color: #958fa3;
+  color: ${colors.grey};
   margin-bottom: ${hp('1%')};
   margin-top: ${hp('0%')};
 `;

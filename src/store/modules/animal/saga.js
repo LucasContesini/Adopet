@@ -3,7 +3,7 @@ import axios from 'axios';
 import baseUrl from '../../../services/baseUrl';
 import NavigationService from '../../../services/navigation';
 
-import { getAnimalTypeSuccess, getAllAnimalSuccess, getAnimalInfoByIdSuccess } from './action';
+import { getAnimalTypeSuccess, getAllAnimalSuccess, getAnimalInfoByIdSuccess, getAllOwnedAnimalSuccess } from './action';
 
 export function* findAnimalType({ payload }) {
     try {
@@ -28,12 +28,31 @@ export function* findAllAnimal({ payload }) {
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+        const userIdSelector = state => state.auth.id;
+        const id = yield select(userIdSelector);
         
         const response = yield call (
             axios.get,
-            `${baseUrl}/animal`
+            `${baseUrl}/animal?id=${id}`
         );
         yield put(getAllAnimalSuccess(response.data));
+    } catch(error) {   
+    }
+}
+
+export function* findAllOwnedAnimal({ payload }) {
+    try {
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+        
+        const response = yield call (
+            axios.get,
+            `${baseUrl}/animal/owner`
+        );
+        yield put(getAllOwnedAnimalSuccess(response.data));
     } catch(error) {   
     }
 }
@@ -91,9 +110,114 @@ export function* saveAnimal({payload}) {
     }
 }
 
+export function* likeAnimal({payload}) {
+    try {
+        const { id, liked } = payload.animal;
+        
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+
+        const userIdSelector = state => state.auth.id;
+        const userId = yield select(userIdSelector);
+
+        const body = {
+            userId,
+            animalId: id,
+            like: !liked
+        };
+
+        const response = yield call(
+            axios.post,
+            `${baseUrl}/animal/follow/like`,
+            body
+        );
+        console.tron.log(response);
+    } catch(error) {
+        console.tron.log(error);
+    }
+}
+
+export function* loveAnimal({payload}) {
+    try {
+        const { id, loved } = payload.animal;
+        
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+
+        const userIdSelector = state => state.auth.id;
+        const userId = yield select(userIdSelector);
+
+        const body = {
+            userId,
+            animalId: id,
+            love: !loved
+        };
+
+        const response = yield call(
+            axios.post,
+            `${baseUrl}/animal/follow/love`,
+            body
+        );
+        console.tron.log(response);
+    } catch(error) {
+        console.tron.log(error);
+    }
+}
+
+export function* updateAdoptAnimal({payload}) {
+    try {
+        const { id } = payload;
+        
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+
+        const response = yield call(
+            axios.put,
+            `${baseUrl}/animal/${id}`
+        );
+        console.tron.log(response);
+    } catch(error) {
+        console.tron.log(error);
+    }
+}
+
+export function* deleteAnimal({payload}) {
+    try {
+        const { id } = payload;
+        
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+
+        const response = yield call(
+            axios.delete,
+            `${baseUrl}/animal/${id}`
+        );
+        console.tron.log(response);
+    } catch(error) {
+        console.tron.log(error);
+    }
+}
+
 export default all([
     takeLatest('@animal/GET_ANIMAL_TYPE', findAnimalType),
     takeLatest('@animal/GET_ALL_ANIMAL', findAllAnimal),
+    takeLatest('@animal/GET_ALL_OWNED_ANIMAL', findAllOwnedAnimal),
     takeLatest('@animal/GET_ANIMAL_BY_ID', findAnimalById),
     takeLatest('@animal/SAVE_ANIMAL', saveAnimal),
+    takeLatest('@animal/LIKE_ANIMAL', likeAnimal),
+    takeLatest('@animal/LOVE_ANIMAL', loveAnimal),
+    takeLatest('@animal/SET_ADOPT_ANIMAL', updateAdoptAnimal),    
+    takeLatest('@animal/DELETE_ADOPT_ANIMAL', deleteAnimal),    
 ]);

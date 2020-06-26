@@ -11,36 +11,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   Body,
-  Header,
-  Title,
   Description,
   AnimalImage,
-  AddPhotoButton,
+  AdoptButton,
+  AddButton,
+  EditButton,
+  DeleteButton,
   InfoCard,
 } from './styles';
-import { getAllAnimal, getAnimalInfoById, likeAnimal, loveAnimal } from '../../store/modules/animal/action';
-import { getUserInfo } from '../../store/modules/auth/action';
+import { getAllOwnedAnimal, getAnimalInfoById, setAdoptAnimal, deleteAnimal } from '../../store/modules/animal/action';
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
 
-export default function AnimalList({ navigation }) {
+export default function AnimalOwnerList({ navigation }) {
     const dispatch = useDispatch();
-    const animals = useSelector(state => state.animal.animals);
+    const animals = useSelector(state => state.animal.ownedAnimals);
     useEffect(() => {
-        dispatch(getUserInfo());
-        dispatch(getAllAnimal());    
+        dispatch(getAllOwnedAnimal());
     }, []);
 
     const getAnimalInfo = id => {
-      console.tron.log(id);
       dispatch(getAnimalInfoById(id));
     }
 
-    const like = animal => {
-      dispatch(likeAnimal(animal));
+    const adopt = id => {
+      dispatch(setAdoptAnimal(id));
     }
 
-    const love = animal => {
-      dispatch(loveAnimal(animal));
+    const del = id => {
+      dispatch(deleteAnimal(id));
     }
 
   return (
@@ -63,11 +61,7 @@ export default function AnimalList({ navigation }) {
                   <Description>{animal.name}</Description>
 
                   <Description>
-                    {animal.vaccinated ? 'Vacinado' : 'Não foi vacinado'}
-                  </Description>
-
-                  <Description>
-                    {animal.castrated ? 'Castrado' : 'Não foi castrado'}
+                    {animal.adopted ? 'Já foi adotado' : 'Ainda não foi adotado'}
                   </Description>
                 </View>
 
@@ -77,31 +71,19 @@ export default function AnimalList({ navigation }) {
                     alignItems: "center",
                     justifyContent:'space-between',
                   }}>
-                  {animal.liked ? 
-                    <TouchableOpacity onPress={() => like(animal)}>
-                      <Icon name="like1" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   : <TouchableOpacity onPress={() => like(animal)}>
-                    <Icon name="like2" size={40} style={{padding: 10}}/>
-                   </TouchableOpacity>
-                   }
-                   
-                  {animal.loved ? 
-                    <TouchableOpacity onPress={() => love(animal)}>
-                      <Icon name="heart" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   : <TouchableOpacity onPress={() => love(animal)}>
-                      <Icon name="hearto" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   }
+
                   <TouchableOpacity onPress={() => getAnimalInfo(animal.id)}>
                     <IconInfo name="info" size={40} style={{padding: 10}}/>
                   </TouchableOpacity>
                   
                 </View>
               </InfoCard>
-
-              <AddPhotoButton title="Adotar" />
+              <View style={{flexDirection: 'row'}}>
+                <EditButton title="Editar" />
+                <AdoptButton title="Foi adotado" onPress={() => adopt(animal.id)}/>
+                <DeleteButton title="Excluir" onPress={() => del(animal.id)}/>
+              </View>
+              <AddButton title="Adicionar animal" />
             </View>
           ))}
         </Body>

@@ -41,9 +41,38 @@ export function getAllAnimalSuccess(animals) {
     }
 }
 
+export function getAllOwnedAnimal() {
+    return {
+        type: '@animal/GET_ALL_OWNED_ANIMAL',
+        payload: {}
+    }
+}
+
+export function getAllOwnedAnimalSuccess(ownedAnimals) {
+    return {
+        type: '@animal/GET_ALL_OWNED_ANIMAL_SUCCESS',
+        payload: { ownedAnimals }
+    }
+}
+
+
 export function getAnimalInfoById(id) {
     return {
         type: '@animal/GET_ANIMAL_BY_ID',
+        payload: { id }
+    }
+}
+
+export function setAdoptAnimal(id) {
+    return {
+        type: '@animal/SET_ADOPT_ANIMAL',
+        payload: { id }
+    }
+}
+
+export function deleteAnimal(id) {
+    return {
+        type: '@animal/DELETE_ADOPT_ANIMAL',
         payload: { id }
     }
 }
@@ -55,3 +84,16 @@ export function getAnimalInfoByIdSuccess(animalInfo) {
     }
 }
 
+export function likeAnimal(animal) {
+    return {
+        type: '@animal/LIKE_ANIMAL',
+        payload: { animal }
+    }
+}
+
+export function loveAnimal(animal) {
+    return {
+        type: '@animal/LOVE_ANIMAL',
+        payload: { animal }
+    }
+}

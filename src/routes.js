@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import AnimalSignUp from './pages/AnimalSignUp';
 import AnimalImageSignUp from './pages/AnimalImageSignUp';
 import AnimalList from './pages/AnimalList';
+import AnimalOwnerList from './pages/AnimalOwnerList';
 import AnimalInfo from './pages/AnimalInfo';
 import Icon from 'react-native-vector-icons/AntDesign';
 import NavIcon from 'react-native-vector-icons/FontAwesome';
@@ -81,8 +82,8 @@ AnimalListStack.navigationOptions = ({ navigation }) => {
 }
 
 const AnimalStack = createStackNavigator({
-  Doe: {
-    screen: AnimalList,
+  AnimalOwnerList: {
+    screen: AnimalOwnerList,
     navigationOptions: ({ navigation }) => {
       return {
         headerLeft: (

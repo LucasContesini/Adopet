@@ -11,6 +11,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AnimalSignUp from './pages/AnimalSignUp';
 import AnimalImageSignUp from './pages/AnimalImageSignUp';
+import AnimalEdit from './pages/AnimalEdit';
+import AnimalImageEdit from './pages/AnimalImageEdit';
 import AnimalList from './pages/AnimalList';
 import AnimalOwnerList from './pages/AnimalOwnerList';
 import AnimalInfo from './pages/AnimalInfo';
@@ -24,13 +26,6 @@ import colors from './config/color';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import HeaderTabs from './components/HeaderTabs';
-
-const AnimalSignUpStack = createStackNavigator({
-  Cadastro: {
-    screen: AnimalSignUp,
-  },
-  AnimalImageSignUp,
-});
 
 const AuthenticationSwitch = createSwitchNavigator({
   SignIn,
@@ -81,6 +76,7 @@ AnimalListStack.navigationOptions = ({ navigation }) => {
   }
 }
 
+
 const AnimalStack = createStackNavigator({
   AnimalOwnerList: {
     screen: AnimalOwnerList,
@@ -95,6 +91,18 @@ const AnimalStack = createStackNavigator({
       }
     }
   },
+  AnimalSignUp: {
+    screen: AnimalSignUp,
+  },
+  AnimalImageSignUp : {
+    screen: AnimalImageSignUp
+  },
+  AnimalEdit: {
+    screen: AnimalEdit,
+  },
+  AnimalImageEdit : {
+    screen: AnimalImageEdit
+  }
 });
 
 AnimalStack.navigationOptions = ({ navigation }) => {
@@ -175,7 +183,6 @@ export default isSigned =>
     createSwitchNavigator(
       {
         AuthenticationSwitch,
-        AnimalSignUpStack,
         TabNavigator,
       },
       {

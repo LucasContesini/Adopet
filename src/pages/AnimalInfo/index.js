@@ -17,13 +17,13 @@ import {
   InfoCard,
 } from './styles';
 import { likeAnimal, loveAnimal } from '../../store/modules/animal/action';
-import colors from '../../config/color';
+import DateHelper from '../../helpers/dateHelper';
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
 
 export default function AnimalInfo({ navigation }) {
     const dispatch = useDispatch();
     const animal = useSelector(state => state.animal.animalInfo);
-
+    const birthDateValid = DateHelper.formatedDate(animal.birthDate);
     const like = animal => {
       dispatch(likeAnimal(animal));
     }
@@ -38,7 +38,7 @@ export default function AnimalInfo({ navigation }) {
       <Container>
         <View>
           <AnimalImage
-            source={{ uri: animal.url ? animal.url : noPhoto }}
+            source={{ uri: animal.url ? animal.url[0] : noPhoto }}
           />
           </View>
           <View>
@@ -63,7 +63,7 @@ export default function AnimalInfo({ navigation }) {
                    }
               </View>
               <Description>{animal.name}</Description>
-              <Description>{animal.birthDate}</Description>
+              <Description>{birthDateValid}</Description>
               <Description>{animal.type}</Description>
               <Description>{animal.breed}</Description>
               <Description>{animal.vaccinated ? 'Vacinado' : 'Não foi vacinado'}</Description>

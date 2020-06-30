@@ -2,7 +2,8 @@ import { all } from 'redux-saga/effects';
 
 import auth from './auth/saga';
 import animal from './animal/saga';
+import commons from './commons/saga';
 
 export default function* rootSaga() {
-  return yield all([auth, animal]);
+  return yield all([auth, animal, commons]);
 }

@@ -24,15 +24,16 @@ const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspo
 
 export default function AnimalList({ navigation }) {
     const dispatch = useDispatch();
+    const render = useSelector(state => state.commons.render);
     const animals = useSelector(state => state.animal.animals);
     useEffect(() => {
         dispatch(getUserInfo());
         dispatch(getAllAnimal());    
-    }, []);
+    }, [render]);
 
     const getAnimalInfo = id => {
       console.tron.log(id);
-      dispatch(getAnimalInfoById(id));
+      dispatch(getAnimalInfoById(id, false));
     }
 
     const like = animal => {

@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+    id: 0,
     name: '', 
     type: '', 
     breed: '', 
@@ -17,6 +18,7 @@ const INITIAL_STATE = {
 export default function animal(state = INITIAL_STATE, action) {
     switch(action.type) {
         case '@animal/ADD_INFO': {
+            INITIAL_STATE.id = action.payload.id;
             INITIAL_STATE.name = action.payload.name;
             INITIAL_STATE.type = action.payload.type;
             INITIAL_STATE.breed = action.payload.breed;

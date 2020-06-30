@@ -24,7 +24,7 @@ import {
 import { addAnimalInfo, getAnimalType } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
 
-export default function AnimalSignUp({ navigation }) {
+export default function AnimalEdit({ navigation }) {
 
   const dispatch = useDispatch();
 
@@ -33,10 +33,15 @@ export default function AnimalSignUp({ navigation }) {
   const [castrated, setCastrated] = useState(false);
   const [animalType, setAnimalType] = useState([]);
 
+  const animal = useSelector(state => state.animal.animalInfo);
   const animalTypes = useSelector(state => state.animal.animalTypes);
+  const birthDateValid = DateHelper.formatedDate(animal.birthDate);
+  
 
   useEffect(() => {
     dispatch(getAnimalType());
+    setVaccinated(animal.vaccinated);
+    setCastrated(animal.castrated);
   }, []);
 
   useEffect(() => {
@@ -57,18 +62,15 @@ export default function AnimalSignUp({ navigation }) {
             <Formik
               onSubmit={values => {
                 dispatch(
-                  addAnimalInfo(0, values.name, type, values.breed, values.birthDate, vaccinated, castrated, values.zipCode, values.description),
+                  addAnimalInfo(animal.id, values.name, type, values.breed, values.birthDate, vaccinated, castrated, values.zipCode, values.description),
                 );
-                navigation.navigate('AnimalImageSignUp');
+                navigation.navigate('AnimalImageEdit');
               }}
-              initialValues={{ name: 'teste', breed: '', birthDate: '21/10/1998', zipCode: '', description: 'teste' }}
+              initialValues={{ name: animal.name, breed: animal.breed, birthDate: birthDateValid, zipCode: animal.zipCode, description: animal.description }}
               validationSchema={yup.object().shape({
                 name: yup
                   .string()
                   .required('Nome é obrigatório'),
-                // zipCode: yup
-                //   .string()
-                //   .required('Cep é obrigatório'),
                 birthDate: yup
                   .string()
                   .test('date', 'Essa data está inválida', date => {
@@ -156,6 +158,7 @@ export default function AnimalSignUp({ navigation }) {
                   <CheckBoxRow>
                     <CheckBox
                       title='Está vacinado'
+                      initialValues
                       checked={vaccinated}
                       checkedIcon={<Image source={require('../../assets/icon-check-ok.png')} />}
                       uncheckedIcon={<Image source={require('../../assets/icon-check-nok.png')} />}

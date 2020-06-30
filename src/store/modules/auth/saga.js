@@ -1,6 +1,7 @@
 import { takeLatest, all, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import baseUrl from '../../../services/baseUrl';
+import tkn from '../../../config/token';
 import NavigationService from '../../../services/navigation';
 
 import { signInSuccess, signInFailed, signUpSuccess, signUpFailed, getUserInfoSuccess } from './action';
@@ -32,7 +33,7 @@ export function* getUserInfo({ payload }) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5MzA0NzI1OSwiZXhwIjoxNTkzOTExMjU5fQ.IQcbxNhAU2u91dgH_UnBAYVedtd0YO4ZHiFp82p77O0`;
+        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
         const response = yield call(
             axios.get,

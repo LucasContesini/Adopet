@@ -24,13 +24,14 @@ const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspo
 
 export default function AnimalOwnerList({ navigation }) {
     const dispatch = useDispatch();
+    const render = useSelector(state => state.commons.render);
     const animals = useSelector(state => state.animal.ownedAnimals);
     useEffect(() => {
-        dispatch(getAllOwnedAnimal());
-    }, []);
+      dispatch(getAllOwnedAnimal());
+    }, [render]);
 
-    const getAnimalInfo = id => {
-      dispatch(getAnimalInfoById(id));
+    const getAnimalInfo = (id, isEdit) => {
+      dispatch(getAnimalInfoById(id, isEdit));
     }
 
     const adopt = id => {
@@ -72,18 +73,18 @@ export default function AnimalOwnerList({ navigation }) {
                     justifyContent:'space-between',
                   }}>
 
-                  <TouchableOpacity onPress={() => getAnimalInfo(animal.id)}>
+                  <TouchableOpacity onPress={() => getAnimalInfo(animal.id, false)}>
                     <IconInfo name="info" size={40} style={{padding: 10}}/>
                   </TouchableOpacity>
                   
                 </View>
               </InfoCard>
               <View style={{flexDirection: 'row'}}>
-                <EditButton title="Editar" />
+                <EditButton title="Editar" onPress={() => getAnimalInfo(animal.id, true)}/>
                 <AdoptButton title="Foi adotado" onPress={() => adopt(animal.id)}/>
                 <DeleteButton title="Excluir" onPress={() => del(animal.id)}/>
               </View>
-              <AddButton title="Adicionar animal" />
+              <AddButton title="Adicionar animal" onPress={() => navigation.navigate('AnimalSignUp')}/>
             </View>
           ))}
         </Body>

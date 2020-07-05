@@ -14,6 +14,14 @@ export const Container = styled.SafeAreaView.attrs({})`
   margin-top: ${hp('-5%')};
 `;
 
+export const Header = styled.View`
+  flex-direction: row;
+  padding-top: ${hp('6%')};
+  padding-left: ${hp('2%')};
+  padding-right: ${hp('2%')};
+  justify-content: space-between;
+`;
+
 export const Body = styled.View.attrs({})`
   flex: 1;
   padding-left: ${wp('11%')};
@@ -23,7 +31,6 @@ export const Body = styled.View.attrs({})`
 export const Title = styled.Text`
   width: ${wp('100%')};
   height: ${hp('21%')};
-  padding-top: ${hp('8%')};
   font-family: Avenir Next;
   font-size: ${wp('5%')};
   color: ${colors.primary};

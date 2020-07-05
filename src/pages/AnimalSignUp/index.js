@@ -27,6 +27,7 @@ import DateHelper from '../../helpers/dateHelper';
 export default function AnimalSignUp({ navigation }) {
 
   const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
 
   const [type, setType] = useState('');
   const [vaccinated, setVaccinated] = useState(false);
@@ -34,6 +35,13 @@ export default function AnimalSignUp({ navigation }) {
   const [animalType, setAnimalType] = useState([]);
 
   const animalTypes = useSelector(state => state.animal.animalTypes);
+
+  useEffect(() => {
+    console.tron.log(token, 'token');
+    if(!token) {
+      navigation.navigate('AuthenticationSwitch');
+    }
+  },[]);
 
   useEffect(() => {
     dispatch(getAnimalType());

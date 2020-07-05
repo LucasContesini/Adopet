@@ -2,13 +2,14 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
+  Header,
   Body,
   Title,
   FormInput,
@@ -16,7 +17,7 @@ import {
   SubmitButton,
   TextAlert,
 } from './styles';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { signUp } from '../../store/modules/auth/action';
 
 export default function SignUp({ navigation }) {
@@ -27,9 +28,18 @@ export default function SignUp({ navigation }) {
 
   return (
       <ScrollView>
+        <Header>
+          <TouchableOpacity
+            hitSlop={{ top: 100, left: 100, right: 200, bottom: 100 }}
+            onPress={() => navigation.navigate('SignIn')}>
+            <Icon name="arrow-back" size={30} color="black" />
+          </TouchableOpacity>
+          <Title>Preencha as informações abaixo</Title>
+        </Header>
+        
         <Container>
           <Body>
-            <Title>Preencha as informações abaixo</Title>
+            
             <Formik
               onSubmit={values => {
                 dispatch(

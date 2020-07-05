@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default reducers => {
   const persistedReducer = persistReducer(
     {
-      storage: AsyncStorage,
       key: 'root',
-      whitelist: ['auth, animal'],
+      storage: AsyncStorage,
+      whitelist: ['auth', 'commons'],
     },
     reducers,
   );

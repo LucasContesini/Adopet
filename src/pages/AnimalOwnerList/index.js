@@ -2,7 +2,7 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Alert, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconInfo from 'react-native-vector-icons/Entypo';
 import NavIcon from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Container,
   Body,
+  Title,
   Description,
+  TitleWithoutAnimal,
   AnimalImage,
   AdoptButton,
   AddButton,
@@ -21,7 +23,7 @@ import {
 } from './styles';
 import { getAllOwnedAnimal, getAnimalInfoById, setAdoptAnimal, deleteAnimal } from '../../store/modules/animal/action';
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
-
+const noAnimal = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2FMobile_border.webp?alt=media&token=0329e9a3-3d71-4b3d-98af-bd72f50021db';
 export default function AnimalOwnerList({ navigation }) {
     const dispatch = useDispatch();
     const render = useSelector(state => state.commons.render);
@@ -42,53 +44,93 @@ export default function AnimalOwnerList({ navigation }) {
       dispatch(deleteAnimal(id));
     }
 
+    const adoptAlert = (animalId) => 
+      Alert.alert('Seu animal foi adotado?', 
+      'Se seu animal foi adotado, ele sairá desta lista e irá para a lista de seus animais doados',
+      [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Confirmar',
+          onPress: () => adopt(animalId), 
+        }        
+      ],
+      { cancelable: false }
+    );
+
+    const delAlert = (animalId) => 
+      Alert.alert('Deseja deletar seu animal?', 
+      'Se seu animal for deletado, ele será excluído permanentemente',
+      [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Confirmar',
+          onPress: () => del(animalId), 
+        }        
+      ],
+      { cancelable: false }
+    );
+
   return (
-    <ScrollView>
-      <Container>
-        <Body>
-          {animals.map(animal => (
-            <View
-              style={{
-                marginBottom: 30,
-              }}>
-              <View>
-                <AnimalImage
-                  source={{ uri: animal.image ? animal.image : noPhoto }}
-                />
-              </View>
-
-              <InfoCard>
-                <View>
-                  <Description>{animal.name}</Description>
-
-                  <Description>
-                    {animal.adopted ? 'Já foi adotado' : 'Ainda não foi adotado'}
-                  </Description>
-                </View>
-
+    <View>
+      <ScrollView>
+        <Container>
+          {animals.length != 0 ? 
+            <Body>
+              {animals.map(animal => (
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: "center",
-                    justifyContent:'space-between',
+                    marginBottom: 30,
                   }}>
+                  <View>
+                    <AnimalImage
+                      source={{ uri: animal.image ? animal.image : noPhoto }}
+                    />
+                  </View>
 
-                  <TouchableOpacity onPress={() => getAnimalInfo(animal.id, false)}>
-                    <IconInfo name="info" size={40} style={{padding: 10}}/>
-                  </TouchableOpacity>
-                  
+                  <InfoCard>
+                    <View>
+                      <Description>{animal.name}</Description>
+
+                      <Description>
+                        {animal.type}
+                      </Description>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: "center",
+                        justifyContent:'space-between',
+                      }}>
+
+                      <TouchableOpacity onPress={() => getAnimalInfo(animal.id, false)}>
+                        <IconInfo name="info" size={40} style={{padding: 10}}/>
+                      </TouchableOpacity>
+                      
+                    </View>
+                  </InfoCard>
+                  <View style={{flexDirection: 'row'}}>
+                    <EditButton title="Editar" onPress={() => getAnimalInfo(animal.id, true)}/>
+                    <AdoptButton title="Foi adotado" onPress={() => adoptAlert(animal.id)}/>
+                    <DeleteButton title="Excluir" onPress={() => delAlert(animal.id)}/>
+                  </View>
                 </View>
-              </InfoCard>
-              <View style={{flexDirection: 'row'}}>
-                <EditButton title="Editar" onPress={() => getAnimalInfo(animal.id, true)}/>
-                <AdoptButton title="Foi adotado" onPress={() => adopt(animal.id)}/>
-                <DeleteButton title="Excluir" onPress={() => del(animal.id)}/>
-              </View>
-              <AddButton title="Adicionar animal" onPress={() => navigation.navigate('AnimalSignUp')}/>
-            </View>
-          ))}
-        </Body>
-      </Container>
-    </ScrollView>
+              ))}
+            </Body>
+          :
+            <Body>
+              <AnimalImage source={{uri: noAnimal}}/>
+              <Title>Que tal adicionar um animal para doação?</Title>
+            </Body>
+          }
+          
+        </Container>
+      </ScrollView>
+      <AddButton title="+" onPress={() => navigation.navigate('AnimalSignUp')}/>
+    </View>
   );
 }

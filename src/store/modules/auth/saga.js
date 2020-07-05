@@ -17,7 +17,7 @@ export function* signIn({ payload }) {
             body);
             console.tron.log(response);
             yield put(signInSuccess(response.data.token));
-            NavigationService.navigate('AnimalSignUp');
+            NavigationService.navigate('TabNavigator');
     } catch(error) {
         console.tron.log(error.response);
         if(error.response.status === 401) {

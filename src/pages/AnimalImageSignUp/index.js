@@ -27,6 +27,7 @@ export default function AnimalImageSignUp({ navigation }) {
 
   const [images, setImages] = useState([]);
 
+
   const name = useSelector(state => state.animal.name);
   const type = useSelector(state => state.animal.type);
   const breed = useSelector(state => state.animal.breed);
@@ -37,7 +38,6 @@ export default function AnimalImageSignUp({ navigation }) {
   const description = useSelector(state => state.animal.description);
 
   const birthDateValid = DateHelper.formatDateToPersist(birthDate);
-
 
   const addAnimal = () => {
     dispatch(saveAnimal(name, type, breed, birthDateValid, vaccinated, castrated, zipCode, description, images));
@@ -110,7 +110,7 @@ export default function AnimalImageSignUp({ navigation }) {
           <AddPhotoButton title="Adicionar foto" onPress={addPhoto}></AddPhotoButton>
         </Body>
         <Footer>
-          <SubmitButton title="Cadastrar animal" onPress={addAnimal}></SubmitButton>
+          <SubmitButton title="Salvar alterações" onPress={addAnimal}></SubmitButton>
         </Footer>
         </Container>
       </ScrollView>

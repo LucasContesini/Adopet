@@ -48,14 +48,16 @@ export function* findAllOwnedAnimal({ payload }) {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
 
+
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         axios.defaults.headers.Authorization = `Bearer ${tkn}`;
-        
+    
         const response = yield call (
             axios.get,
             `${baseUrl}/animal/owner`
         );
         yield put(getAllOwnedAnimalSuccess(response.data));
+        
     } catch(error) {   
     }
 }
@@ -159,25 +161,29 @@ export function* likeAnimal({payload}) {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
 
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
-
-        const userIdSelector = state => state.auth.id;
-        const userId = yield select(userIdSelector);
-
-        const body = {
-            userId,
-            animalId: id,
-            like: !liked
-        };
-
-        const response = yield call(
-            axios.post,
-            `${baseUrl}/animal/follow/like`,
-            body
-        );
-        console.tron.log(response);
-        yield put(setRender());
+        if(!token) {
+            NavigationService.navigate('AuthenticationSwitch');
+        } else {
+            axios.defaults.headers.Authorization = `Bearer ${token}`;
+            axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+    
+            const userIdSelector = state => state.auth.id;
+            const userId = yield select(userIdSelector);
+    
+            const body = {
+                userId,
+                animalId: id,
+                like: !liked
+            };
+    
+            const response = yield call(
+                axios.post,
+                `${baseUrl}/animal/follow/like`,
+                body
+            );
+            console.tron.log(response);
+            yield put(setRender());    
+        }
     } catch(error) {
         console.tron.log(error);
     }
@@ -190,25 +196,29 @@ export function* loveAnimal({payload}) {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
 
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        if(!token) {
+            NavigationService.navigate('AuthenticationSwitch');
+        } else {
+            axios.defaults.headers.Authorization = `Bearer ${token}`;
+            axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
-        const userIdSelector = state => state.auth.id;
-        const userId = yield select(userIdSelector);
+            const userIdSelector = state => state.auth.id;
+            const userId = yield select(userIdSelector);
 
-        const body = {
-            userId,
-            animalId: id,
-            love: !loved
-        };
+            const body = {
+                userId,
+                animalId: id,
+                love: !loved
+            };
 
-        const response = yield call(
-            axios.post,
-            `${baseUrl}/animal/follow/love`,
-            body
-        );
-        console.tron.log(response);
-        yield put(setRender());
+            const response = yield call(
+                axios.post,
+                `${baseUrl}/animal/follow/love`,
+                body
+            );
+            console.tron.log(response);
+            yield put(setRender());
+        }
     } catch(error) {
         console.tron.log(error);
     }

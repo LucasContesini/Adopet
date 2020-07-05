@@ -11,21 +11,21 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 export const Container = styled.SafeAreaView.attrs({})`
+  flex: 1;
   margin-top: ${hp('-5%')};
 `;
 
 export const Body = styled.View.attrs({})`
-  flex: 1;
   padding-top: ${wp('10%')};
   padding-left: ${wp('5%')};
   padding-right: ${wp('5%')};
 `;
 
 export const Title = styled.Text`
-  height: ${hp('21%')};
-  padding-top: ${hp('8%')};
+  height: ${hp('30%')};
+  padding-top: ${hp('5%')};
   font-family: Avenir Next;
-  font-size: ${wp('5%')};
+  font-size: ${wp('6%')};
   color: ${colors.primary};
 `;
 
@@ -38,12 +38,16 @@ export const AddButton = styled(Button).attrs({
   containerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: 50,
+    height: 50,
+    bottom: 10,
+    right: 10,
+    position: 'absolute',
   },
   buttonStyle: {
-    marginTop: hp('4%'),
     height: hp('8%'),
     width: wp('70%'),
-    backgroundColor: colors.accept,
+    backgroundColor: colors.secondary,
     borderRadius: hp('4%'),
   },
   titleStyle: {

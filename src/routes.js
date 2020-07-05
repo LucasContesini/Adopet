@@ -29,7 +29,7 @@ import HeaderTabs from './components/HeaderTabs';
 
 const AuthenticationSwitch = createSwitchNavigator({
   SignIn,
-  SignUp,
+  SignUp
 });
 
 const AnimalListStack = createStackNavigator({
@@ -178,15 +178,15 @@ const TabNavigator = createMaterialTopTabNavigator({
   }
 );
 
-export default isSigned =>
+export default () =>
   createAppContainer(
     createSwitchNavigator(
       {
-        AuthenticationSwitch,
         TabNavigator,
+        AuthenticationSwitch,
       },
       {
-        initialRouteName: isSigned ? 'TabNavigator' : 'TabNavigator',
+        initialRouteName: 'TabNavigator',
       },
     ),
   );

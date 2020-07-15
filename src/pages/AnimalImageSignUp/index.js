@@ -2,6 +2,7 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
+import RNFetchBlob from 'rn-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,6 +19,8 @@ import {
 } from './styles';
 import { saveAnimal } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
+import storage from '@react-native-firebase/storage';
+
 
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
 
@@ -85,6 +88,24 @@ export default function AnimalImageSignUp({ navigation }) {
           100,
           rotation,
         ).then(({ uri }) => {
+          const uriResize = uri.replace('file://', '');
+          RNFetchBlob.fs.readFile(uriResize, 'base64').then(data => {
+            return RNFetchBlob.polyfill.Blob.build(data, {
+              type: 'image/jpeg;BASE64',
+            }).then(async blob => {
+              const fbImage = storage()
+              .ref()
+              .child('images')
+              try {
+                await fbImage.putFile(blob._ref, { contentType: 'image/jpeg' });
+                console.tron.log(fbImage);
+                const url = await fbImage.getDownloadURL();
+                console.tron.log(url);
+              } catch (err) {
+                console.tron.log(err);
+              }
+            });
+          });
           setImages([...images, uri]);
         });
       }

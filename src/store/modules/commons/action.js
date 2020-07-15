@@ -4,3 +4,10 @@ export function setRender() {
         payload: { }
     }
 }
+
+export function setRegion(region) {
+    return {
+        type: '@commons/SET_REGION',
+        payload: { region }
+    }
+}

@@ -9,6 +9,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import RegionChoose from './pages/RegionChoose';
 import AnimalSignUp from './pages/AnimalSignUp';
 import AnimalImageSignUp from './pages/AnimalImageSignUp';
 import AnimalEdit from './pages/AnimalEdit';
@@ -30,6 +31,9 @@ import HeaderTabs from './components/HeaderTabs';
 const AuthenticationSwitch = createSwitchNavigator({
   SignIn,
   SignUp
+});
+const RegionChooseStack = createStackNavigator({
+RegionChoose
 });
 
 const AnimalListStack = createStackNavigator({
@@ -182,11 +186,12 @@ export default () =>
   createAppContainer(
     createSwitchNavigator(
       {
+        RegionChooseStack,
         TabNavigator,
         AuthenticationSwitch,
       },
       {
-        initialRouteName: 'TabNavigator',
+        initialRouteName: 'RegionChooseStack',
       },
     ),
   );

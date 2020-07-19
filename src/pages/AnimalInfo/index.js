@@ -64,6 +64,7 @@ export default function AnimalInfo({ navigation }) {
               </View>
               <Description>{animal.name}</Description>
               <Description>{birthDateValid}</Description>
+              <Description>{animal.city}</Description>
               <Description>{animal.type}</Description>
               <Description>{animal.breed}</Description>
               <Description>{animal.vaccinated ? 'Vacinado' : 'Não foi vacinado'}</Description>

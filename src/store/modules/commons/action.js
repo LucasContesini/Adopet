@@ -11,3 +11,10 @@ export function setRegion(region) {
         payload: { region }
     }
 }
+
+export function setSearchInfo(type, vaccinated, castrated) {
+    return {
+        type: '@commons/SET_SEARCH_INFO',
+        payload: { type, vaccinated, castrated }
+    }
+}

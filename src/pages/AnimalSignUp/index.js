@@ -21,6 +21,7 @@ import {
   FormInputMask,
 } from './styles';
 
+import axios from 'axios';
 import { addAnimalInfo, getAnimalType } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
 
@@ -29,6 +30,8 @@ export default function AnimalSignUp({ navigation }) {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
 
+  const [cep, setCep] = useState('');
+  const [city, setCity] = useState('');
   const [type, setType] = useState('');
   const [vaccinated, setVaccinated] = useState(false);
   const [castrated, setCastrated] = useState(false);
@@ -37,7 +40,6 @@ export default function AnimalSignUp({ navigation }) {
   const animalTypes = useSelector(state => state.animal.animalTypes);
 
   useEffect(() => {
-    console.tron.log(token, 'token');
     if(!token) {
       navigation.navigate('AuthenticationSwitch');
     }
@@ -57,6 +59,15 @@ export default function AnimalSignUp({ navigation }) {
     });
   }, [animalTypes]);
 
+  async function validateCep() {
+    console.tron.log('chegou');
+    const cepFormatted = cep.replace('-', '');
+    const response = await axios.get(`https://viacep.com.br/ws/${cepFormatted}/json`);
+    console.tron.log(response);
+    setCity(response.data.localidade);
+  }
+
+
   return (
       <ScrollView>
         <Container>
@@ -65,7 +76,7 @@ export default function AnimalSignUp({ navigation }) {
             <Formik
               onSubmit={values => {
                 dispatch(
-                  addAnimalInfo(0, values.name, type, values.breed, values.birthDate, vaccinated, castrated, values.zipCode, values.description),
+                  addAnimalInfo(0, values.name, type, values.breed, values.birthDate, vaccinated, castrated, city, values.description),
                 );
                 navigation.navigate('AnimalImageSignUp');
               }}
@@ -154,8 +165,9 @@ export default function AnimalSignUp({ navigation }) {
                     error={true}
                     type={'zip-code'}
                     returnKeyType="next"
-                    value={values.zipCode}
-                    onChangeText={handleChange('zipCode')}
+                    value={cep}
+                    onChangeText={setCep}
+                    onEndEditing={() => validateCep()}
                   />
                   {touched.zipCode && errors.zipCode && (
                     <TextAlert>{errors.zipCode}</TextAlert>

@@ -1,21 +1,21 @@
-export function addAnimalInfo(id, name, type, breed, birthDate, vaccinated, castrated, zipCode, description) {
+export function addAnimalInfo(id, name, type, breed, birthDate, vaccinated, castrated, city, description) {
     return {
         type: '@animal/ADD_INFO',
-        payload: { id, name, type, breed, birthDate, vaccinated, castrated, zipCode, description }
+        payload: { id, name, type, breed, birthDate, vaccinated, castrated, city, description }
     }
 }
 
-export function saveAnimal(name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images) {
+export function saveAnimal(name, type, breed, birthDate, vaccinated, castrated, city, description, images) {
     return {
         type: '@animal/SAVE_ANIMAL',
-        payload: { name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images }
+        payload: { name, type, breed, birthDate, vaccinated, castrated, city, description, images }
     }
 }
 
-export function updateAnimal(id, name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images) {
+export function updateAnimal(id, name, type, breed, birthDate, vaccinated, castrated, city, description, images) {
     return {
         type: '@animal/UPDATE_ANIMAL',
-        payload: { id, name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images }
+        payload: { id, name, type, breed, birthDate, vaccinated, castrated, city, description, images }
     }
 }
 

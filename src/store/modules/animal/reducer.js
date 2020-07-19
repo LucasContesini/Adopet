@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     birthDate: '', 
     vaccinated: '', 
     castrated: '', 
-    zipCode: '', 
+    city: '', 
     description: '',
     images: [],
     animalTypes: [],
@@ -25,7 +25,7 @@ export default function animal(state = INITIAL_STATE, action) {
             INITIAL_STATE.birthDate = action.payload.birthDate;
             INITIAL_STATE.vaccinated = action.payload.vaccinated;
             INITIAL_STATE.castrated = action.payload.castrated;
-            INITIAL_STATE.zipCode = action.payload.zipCode;
+            INITIAL_STATE.city = action.payload.city;
             INITIAL_STATE.description = action.payload.description;
             break;
         }

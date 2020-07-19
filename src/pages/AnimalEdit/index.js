@@ -21,6 +21,7 @@ import {
   FormInputMask,
 } from './styles';
 
+import axios from 'axios';
 import { addAnimalInfo, getAnimalType } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
 
@@ -28,10 +29,13 @@ export default function AnimalEdit({ navigation }) {
 
   const dispatch = useDispatch();
 
+  const [inicialValue, setInicialValue] = useState('');
   const [type, setType] = useState('');
   const [vaccinated, setVaccinated] = useState(false);
   const [castrated, setCastrated] = useState(false);
   const [animalType, setAnimalType] = useState([]);
+  const [cep, setCep] = useState('');
+  const [city, setCity] = useState('');
 
   const animal = useSelector(state => state.animal.animalInfo);
   const animalTypes = useSelector(state => state.animal.animalTypes);
@@ -51,8 +55,19 @@ export default function AnimalEdit({ navigation }) {
         label: type.name
       }
       animalType.push(obj);
+      if(animal.type === obj.label) {
+        setInicialValue(obj.value);
+      }
     });
   }, [animalTypes]);
+
+
+
+  async function validateCep() {
+    const cepFormatted = cep.replace('-', '');
+    const response = await axios.get(`https://viacep.com.br/ws/${cepFormatted}/json`);
+    setCity(response.data.localidade);
+  }
 
   return (
       <ScrollView>
@@ -62,11 +77,11 @@ export default function AnimalEdit({ navigation }) {
             <Formik
               onSubmit={values => {
                 dispatch(
-                  addAnimalInfo(animal.id, values.name, type, values.breed, values.birthDate, vaccinated, castrated, values.zipCode, values.description),
+                  addAnimalInfo(animal.id, values.name, type, values.breed, values.birthDate, vaccinated, castrated, city, values.description),
                 );
                 navigation.navigate('AnimalImageEdit');
               }}
-              initialValues={{ name: animal.name, breed: animal.breed, birthDate: birthDateValid, zipCode: animal.zipCode, description: animal.description }}
+              initialValues={{ name: animal.name, breed: animal.breed, birthDate: birthDateValid, zipCode: '', description: animal.description }}
               validationSchema={yup.object().shape({
                 name: yup
                   .string()
@@ -108,6 +123,7 @@ export default function AnimalEdit({ navigation }) {
                   <DropDownPicker
                     items={animalType}
                     searchable={true}
+                    defaultValue={inicialValue}
                     searchablePlaceholder="Buscar por tipo de animal"
                     searchableError="Nenhum tipo de animal foi encontrado"
                     containerStyle={{height: 40}}
@@ -148,8 +164,9 @@ export default function AnimalEdit({ navigation }) {
                     error={true}
                     type={'zip-code'}
                     returnKeyType="next"
-                    value={values.zipCode}
-                    onChangeText={handleChange('zipCode')}
+                    value={cep}
+                    onChangeText={setCep}
+                    onEndEditing={() => validateCep()}
                   />
                   {touched.zipCode && errors.zipCode && (
                     <TextAlert>{errors.zipCode}</TextAlert>

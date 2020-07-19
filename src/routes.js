@@ -17,6 +17,7 @@ import AnimalImageEdit from './pages/AnimalImageEdit';
 import AnimalList from './pages/AnimalList';
 import AnimalOwnerList from './pages/AnimalOwnerList';
 import AnimalInfo from './pages/AnimalInfo';
+import SearchAnimal from './pages/SearchAnimal';
 import Icon from 'react-native-vector-icons/AntDesign';
 import NavIcon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -45,7 +46,9 @@ const AnimalListStack = createStackNavigator({
           <NavIcon style={{paddingLeft: hp('2%')}} name="navicon" size={50}/>
         ),
         headerRight: (
-          <Icon style={{paddingRight: hp('2%')}} name="search1" size={50}/>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchAnimal')}>
+            <Icon style={{paddingRight: hp('2%')}} name="search1" size={50}/>
+          </TouchableOpacity>
         ),
         headerTitle: (
           <HeaderTabs title="Adote um animal" />
@@ -59,6 +62,16 @@ const AnimalListStack = createStackNavigator({
       return {
         headerTitle: (
           <HeaderTabs title="Informações do animal" />
+        ),
+      }
+    }
+  },
+  SearchAnimal: {
+    screen: SearchAnimal,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: (
+          <HeaderTabs title="Buscar por um animal" />
         ),
       }
     }

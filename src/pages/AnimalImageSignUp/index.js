@@ -37,13 +37,13 @@ export default function AnimalImageSignUp({ navigation }) {
   const birthDate = useSelector(state => state.animal.birthDate);
   const vaccinated = useSelector(state => state.animal.vaccinated);
   const castrated = useSelector(state => state.animal.castrated);
-  const zipCode = useSelector(state => state.animal.zipCode);
+  const city = useSelector(state => state.animal.city);
   const description = useSelector(state => state.animal.description);
 
   const birthDateValid = DateHelper.formatDateToPersist(birthDate);
 
   const addAnimal = () => {
-    dispatch(saveAnimal(name, type, breed, birthDateValid, vaccinated, castrated, zipCode, description, images));
+    dispatch(saveAnimal(name, type, breed, birthDateValid, vaccinated, castrated, city, description, images));
   }
 
   const addPhoto = () => {

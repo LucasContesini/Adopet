@@ -34,9 +34,17 @@ export function* findAllAnimal({ payload }) {
         const userIdSelector = state => state.auth.id;
         const id = yield select(userIdSelector);
         
+        const regionSelector = state => state.commons.region;
+        const city = yield select(regionSelector);
+        const typeSelector = state => state.commons.type;
+        const type = yield select(typeSelector);
+        const vaccinatedSelector = state => state.commons.vaccinated;
+        const vaccinated = yield select(vaccinatedSelector);
+        const castratedSelector = state => state.commons.castrated;
+        const castrated = yield select(castratedSelector);
         const response = yield call (
             axios.get,
-            `${baseUrl}/animal?id=${id}`
+            `${baseUrl}/animal?id=${id}&city=${city}&type=${type}&vaccinated=${vaccinated}&castrated=${castrated}`
         );
         yield put(getAllAnimalSuccess(response.data));
     } catch(error) {   
@@ -85,10 +93,9 @@ export function* findAnimalById({ payload }) {
     }
 }
 
-
 export function* saveAnimal({payload}) {
     try {
-        const {name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images} = payload;
+        const {name, type, breed, birthDate, vaccinated, castrated, city, description, images} = payload;
         
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
@@ -102,7 +109,7 @@ export function* saveAnimal({payload}) {
             birthDate,
             vaccinated,
             castrated,
-            zipCode,
+            city,
             description,
             images
         };
@@ -122,7 +129,7 @@ export function* saveAnimal({payload}) {
 
 export function* updateAnimal({payload}) {
     try {
-        const {id, name, type, breed, birthDate, vaccinated, castrated, zipCode, description, images} = payload;
+        const {id, name, type, breed, birthDate, vaccinated, castrated, city, description, images} = payload;
         
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
@@ -136,7 +143,7 @@ export function* updateAnimal({payload}) {
             birthDate,
             vaccinated,
             castrated,
-            zipCode,
+            city,
             description,
             images
         };

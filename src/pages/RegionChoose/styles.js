@@ -9,6 +9,7 @@ import colors from '../../config/color';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import InputMask from '../../components/InputMask';
 
 export const Container = styled.SafeAreaView.attrs({})`
   margin-top: ${hp('-5%')};
@@ -20,6 +21,12 @@ export const Header = styled.View`
   padding-left: ${hp('2%')};
   padding-right: ${hp('2%')};
   justify-content: space-between;
+`;
+
+export const FormInputMask = styled(InputMask).attrs({})`
+  width: ${wp('80%')};
+  align-content: center;
+  margin-bottom: ${hp('3%')};
 `;
 
 export const Body = styled.View.attrs({})`

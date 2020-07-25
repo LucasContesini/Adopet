@@ -19,6 +19,7 @@ import {
   SubmitButton,
   LocationButton,
   TextAlert,
+  FormInputMask
 } from './styles';
 import { setRegion } from '../../store/modules/commons/action';
 import GeolocationHelper from '../../helpers/geolocationHelper';
@@ -81,15 +82,16 @@ export default function RegionChoose({ navigation }) {
               }) => (
                 <>
                 <TextHolderInput>Cep</TextHolderInput>
-                  <FormInput
-                    maxLength={250}
-                    error={errors.cep}
-                    autoCorrect={false}
-                    autoCapitalize="none"
+                  <FormInputMask
+                    error={true}
+                    type={'zip-code'}
                     returnKeyType="next"
                     value={values.cep}
                     onChangeText={handleChange('cep')}
                   />
+                  {touched.cep && errors.cep && (
+                    <TextAlert>{errors.cep}</TextAlert>
+                  )}
                   <LocationButton
                     title="Usar localização atual"
                     onPress={() => verifyLocationPermission()} />

@@ -41,6 +41,34 @@ export const Title = styled.Text`
   color: ${colors.primary};
 `;
 
+export const Information = styled.Text`
+  width: ${wp('100%')};
+  
+  padding-top: ${hp('8%')};
+  padding-bottom: ${hp('2%')};
+  font-family: Avenir Next;
+  font-size: ${wp('4%')};
+  color: ${colors.secondary};
+`;
+
+export const LocationButton = styled(Button).attrs({
+  containerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonStyle: {
+    marginTop: hp('4%'),
+    height: hp('8%'),
+    width: wp('70%'),
+    backgroundColor: colors.primary,
+    borderRadius: hp('4%'),
+  },
+  titleStyle: {
+    fontFamily: 'Avenir Next',
+    fontSize: hp('3%'),
+  },
+})``;
+
 export const FormInput = styled(Input)`
   margin-bottom: ${hp('3%')};
   width: ${wp('80%')};

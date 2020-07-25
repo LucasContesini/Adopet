@@ -95,18 +95,16 @@ export default function AnimalImageSignUp({ navigation }) {
             }).then(async blob => {
               const fbImage = storage()
               .ref()
-              .child('images')
+              .child(blob._ref);
               try {
                 await fbImage.putFile(blob._ref, { contentType: 'image/jpeg' });
-                console.tron.log(fbImage);
                 const url = await fbImage.getDownloadURL();
-                console.tron.log(url);
+                setImages([...images, url]);
               } catch (err) {
                 console.tron.log(err);
               }
             });
           });
-          setImages([...images, uri]);
         });
       }
     });

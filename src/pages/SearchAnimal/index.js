@@ -2,10 +2,12 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, ToastAndroid, PermissionsAndroid } from 'react-native';
 import { CheckBox } from 'react-native-elements'
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
+import Geolocation from 'react-native-geolocation-service';
 import { ScrollView } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,10 +21,13 @@ import {
   TextAlert,
   CheckBoxRow,
   FormInputMask,
+  LocationButton,
+  Information
 } from './styles';
 
+import GeolocationHelper from '../../helpers/geolocationHelper';
 import { getAnimalType } from '../../store/modules/animal/action';
-import { setSearchInfo } from '../../store/modules/commons/action';
+import { setSearchInfo, setRegion } from '../../store/modules/commons/action';
 
 export default function SearchAnimal({ navigation }) {
 
@@ -55,6 +60,39 @@ export default function SearchAnimal({ navigation }) {
     });
   }, [animalTypes]);
 
+  async function verifyLocationPermission() {
+    PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+      .then(response => {
+        if(response) {
+            Geolocation.getCurrentPosition(
+              async position => {
+                  var city = await GeolocationHelper.getCityByLatAndLong(position.coords.latitude, position.coords.longitude);
+                  if(city) {
+                    dispatch(setRegion(city));
+                    ToastAndroid.show("Região armazenada com sucesso!", ToastAndroid.LONG); 
+                  }
+              },
+              error => {
+                console.log(error);
+              }
+            )
+        } else {
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+          ).then(result => {
+            console.log(result);
+          })
+        }
+      });
+    }
+
+
+  async function searchCep(cep) {
+    const response = await axios.get(`https://viacep.com.br/ws/${cep}/json`);
+    dispatch(setRegion(response.data.localidade));
+    navigation.navigate('TabNavigator');
+  };
+
   return (
       <ScrollView>
         <Container>
@@ -65,6 +103,7 @@ export default function SearchAnimal({ navigation }) {
                 dispatch(
                   setSearchInfo(type, vaccinated, castrated),
                 );
+                searchCep(values.cep);
                 navigation.goBack();
               }}
               initialValues={{ }}
@@ -107,6 +146,22 @@ export default function SearchAnimal({ navigation }) {
                       onPress={() => setCastrated(!castrated)}  
                     />
                   </CheckBoxRow>
+
+                  <Information>Caso queira trocar a região já informada</Information>
+                  <TextHolderInput>Cep</TextHolderInput>
+                  <FormInputMask
+                    maxLength={250}
+                    type={'zip-code'}
+                    error={errors.cep}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    value={values.cep}
+                    onChangeText={handleChange('cep')}
+                  />
+                  <LocationButton
+                    title="Usar localização atual"
+                    onPress={() => verifyLocationPermission()} />
 
                   <SubmitButton
                     title="Pronto"

@@ -1,3 +1,3 @@
-const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyMyIsImlhdCI6MTU5NTE5MzU1NiwiZXhwIjoxNTk2MDU3NTU2fQ.3RZ5Pc8o39eOKQqJDJki7ec0WVY2mCKJ2sD2su8K_os';
+const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBZG9wZXQiLCJzdWIiOiIyNyIsImlhdCI6MTU5NTY0NDg5MywiZXhwIjoxNTk2NTA4ODkzfQ.65v0ZzxcoW6hI9U0JPSMnjlWqIiRexFbu9nBd43uX6Y';
 
 export default token;

@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
     token: '',
     loginFailed: false,
-    id: '',
+    id: 0,
     email: '',
     nickname: '',
     emailConflict: false,

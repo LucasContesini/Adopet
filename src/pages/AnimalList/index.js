@@ -25,11 +25,15 @@ const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspo
 export default function AnimalList({ navigation }) {
     const dispatch = useDispatch();
     const render = useSelector(state => state.commons.render);
+    const region = useSelector(state => state.commons.region);
+    const type = useSelector(state => state.commons.type);
+    const vaccinated = useSelector(state => state.commons.vaccinated);
+    const castrated = useSelector(state => state.commons.castrated);
     const animals = useSelector(state => state.animal.animals);
     useEffect(() => {
         dispatch(getUserInfo());
         dispatch(getAllAnimal());    
-    }, [render]);
+    }, [render, region, type, vaccinated, castrated]);
 
     const getAnimalInfo = id => {
       console.tron.log(id);

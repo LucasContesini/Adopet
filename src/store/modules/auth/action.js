@@ -12,6 +12,14 @@ export function signInSuccess(token) {
     }
 }
 
+export function signOut() {
+    return {
+        type: '@auth/SIGN_OUT',
+        payload: { }
+    }
+}
+
+
 export function signInFailed() {
     return {
         type: '@auth/SIGN_IN_FAILED',
@@ -47,9 +55,9 @@ export function getUserInfo() {
     }
 }
 
-export function getUserInfoSuccess(id, email, nickname) {
+export function getUserInfoSuccess(id, email, nickname, uid) {
     return {
         type: '@auth/GET_USER_INFO_SUCCESS',
-        payload: { id, email, nickname }
+        payload: { id, email, nickname, uid }
     }
 }

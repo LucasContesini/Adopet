@@ -13,7 +13,7 @@ export function* findAnimalType({ payload }) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
         
         const response = yield call (
             axios.get,
@@ -30,7 +30,7 @@ export function* findAllAnimal({ payload }) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
         const userIdSelector = state => state.auth.id;
         const id = yield select(userIdSelector);
         
@@ -58,7 +58,7 @@ export function* findAllOwnedAnimal({ payload }) {
 
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
     
         const response = yield call (
             axios.get,
@@ -76,10 +76,9 @@ export function* findAnimalById({ payload }) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
         
         const { id, isEdit } = payload;
-        console.tron.log(isEdit);
         const response = yield call (
             axios.get,
             `${baseUrl}/animal/${id}`
@@ -101,7 +100,7 @@ export function* saveAnimal({payload}) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
         const body = {
             name,
             typeId: type,
@@ -119,7 +118,6 @@ export function* saveAnimal({payload}) {
             `${baseUrl}/animal`,
             body
         );
-        console.tron.log(response);
         yield put(setRender());
         NavigationService.navigate('AnimalOwnerList');
     } catch(error) {
@@ -135,7 +133,7 @@ export function* updateAnimal({payload}) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
         const body = {
             name,
             typeId: type,
@@ -153,7 +151,7 @@ export function* updateAnimal({payload}) {
             `${baseUrl}/animal/${id}`,
             body
         );
-        console.tron.log(response);
+        
         yield put(setRender());
         NavigationService.navigate('AnimalOwnerList');
     } catch(error) {
@@ -172,7 +170,7 @@ export function* likeAnimal({payload}) {
             NavigationService.navigate('AuthenticationSwitch');
         } else {
             axios.defaults.headers.Authorization = `Bearer ${token}`;
-            axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+            // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
     
             const userIdSelector = state => state.auth.id;
             const userId = yield select(userIdSelector);
@@ -188,7 +186,7 @@ export function* likeAnimal({payload}) {
                 `${baseUrl}/animal/follow/like`,
                 body
             );
-            console.tron.log(response);
+            
             yield put(setRender());    
         }
     } catch(error) {
@@ -207,7 +205,7 @@ export function* loveAnimal({payload}) {
             NavigationService.navigate('AuthenticationSwitch');
         } else {
             axios.defaults.headers.Authorization = `Bearer ${token}`;
-            axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+            // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
             const userIdSelector = state => state.auth.id;
             const userId = yield select(userIdSelector);
@@ -223,7 +221,7 @@ export function* loveAnimal({payload}) {
                 `${baseUrl}/animal/follow/love`,
                 body
             );
-            console.tron.log(response);
+            
             yield put(setRender());
         }
     } catch(error) {
@@ -239,13 +237,13 @@ export function* updateAdoptAnimal({payload}) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
         const response = yield call(
             axios.put,
             `${baseUrl}/animal/adopt/${id}`
         );
-        console.tron.log(response);
+        
         yield put(setRender());
     } catch(error) {
         console.tron.log(error);
@@ -260,13 +258,13 @@ export function* deleteAnimal({payload}) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
         const response = yield call(
             axios.delete,
             `${baseUrl}/animal/${id}`
         );
-        console.tron.log(response);
+        
         yield put(setRender());
     } catch(error) {
         console.tron.log(error);

@@ -1,30 +1,33 @@
+import produce from 'immer';
+
 const INITIAL_STATE = {
     render: 0,
     region: '',
-    type: 0,
+    type: '',
     vaccinated: false,
     castrated: false,
 };
 
 export default function commons(state = INITIAL_STATE, action) {
-    switch(action.type) {
-        case '@commons/SET_RENDER': {
-            if(INITIAL_STATE.render > 10) {
-                INITIAL_STATE.render = 0;
+    return produce(state, draft => {
+        switch(action.type) {
+            case '@commons/SET_RENDER': {
+                if(draft.render > 10) {
+                    draft.render = 0;
+                }
+                draft.render = ++draft.render;
+                break;
             }
-            INITIAL_STATE.render = ++INITIAL_STATE.render;
-            break;
+            case '@commons/SET_REGION': {
+                draft.region = action.payload.region;
+                break;
+            }
+            case '@commons/SET_SEARCH_INFO': {
+                draft.type = action.payload.type;
+                draft.vaccinated = action.payload.vaccinated;
+                draft.castrated = action.payload.castrated;
+                break;
+            }
         }
-        case '@commons/SET_REGION': {
-            INITIAL_STATE.region = action.payload.region;
-            break;
-        }
-        case '@commons/SET_SEARCH_INFO': {
-            INITIAL_STATE.type = action.payload.type;
-            INITIAL_STATE.vaccinated = action.payload.vaccinated;
-            INITIAL_STATE.castrated = action.payload.castrated;
-            break;
-        }
-    }
-    return INITIAL_STATE;
+    });
 }

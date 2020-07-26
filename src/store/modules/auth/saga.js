@@ -15,7 +15,7 @@ export function* signIn({ payload }) {
             axios.post,
             `${baseUrl}/auth`,
             body);
-            console.tron.log(response);
+            
             yield put(signInSuccess(response.data.token));
             NavigationService.navigate('TabNavigator');
     } catch(error) {
@@ -33,14 +33,13 @@ export function* getUserInfo({ payload }) {
         const token = yield select(tokenSelector);
 
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        axios.defaults.headers.Authorization = `Bearer ${tkn}`;
+        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
 
         const response = yield call(
             axios.get,
             `${baseUrl}/user`);
-
-        const { id, email, nickname } = response.data;
-            yield put(getUserInfoSuccess(id, email, nickname));
+        const { id, email, nickname, uid } = response.data;
+            yield put(getUserInfoSuccess(id, email, nickname, uid));
     } catch(error) {
     }   
 }

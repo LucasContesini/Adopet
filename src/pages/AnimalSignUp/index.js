@@ -60,10 +60,8 @@ export default function AnimalSignUp({ navigation }) {
   }, [animalTypes]);
 
   async function validateCep() {
-    console.tron.log('chegou');
     const cepFormatted = cep.replace('-', '');
     const response = await axios.get(`https://viacep.com.br/ws/${cepFormatted}/json`);
-    console.tron.log(response);
     setCity(response.data.localidade);
   }
 

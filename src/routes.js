@@ -15,10 +15,13 @@ import AnimalImageSignUp from './pages/AnimalImageSignUp';
 import AnimalEdit from './pages/AnimalEdit';
 import AnimalImageEdit from './pages/AnimalImageEdit';
 import AnimalList from './pages/AnimalList';
+import ChatList from './pages/ChatList';
+import Chat from './pages/Chat';
 import AnimalOwnerList from './pages/AnimalOwnerList';
 import AnimalInfo from './pages/AnimalInfo';
 import SearchAnimal from './pages/SearchAnimal';
 import Icon from 'react-native-vector-icons/AntDesign';
+import ArrowIcon from 'react-native-vector-icons/MaterialIcons';
 import NavIcon from 'react-native-vector-icons/FontAwesome';
 import {
   widthPercentageToDP as wp,
@@ -28,6 +31,7 @@ import colors from './config/color';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import HeaderTabs from './components/HeaderTabs';
+import Header from './components/Header';
 
 const AuthenticationSwitch = createSwitchNavigator({
   SignIn,
@@ -138,8 +142,8 @@ AnimalStack.navigationOptions = ({ navigation }) => {
 }
 
 const ChatStack = createStackNavigator({
-  Chat: {
-    screen: AnimalList,
+  ChatList: {
+    screen: ChatList,
     navigationOptions: ({ navigation }) => {
       return {
         headerLeft: (
@@ -150,6 +154,55 @@ const ChatStack = createStackNavigator({
         ),
       }
     }
+  },
+  Chat: {
+    screen: Chat,
+    navigationOptions: ({ navigation }) => {
+      const data = navigation.getParam('data');
+      const { animalName, animalPhoto, nickname } = data;
+      return {
+        headerStyle: {
+          height: hp('10%'),
+        },
+        headerBackground: <Header />,
+        headerTitle: () => (
+          <>
+            {/* <TouchableOpacity */}
+              {/* hitSlop={{ top: 25, left: 25, right: 25, bottom: 25 }}> */}
+              <Image
+                source={{
+                  uri: `${animalPhoto}`,
+                }}
+                style={{
+                  width: hp('7%'),
+                  height: hp('7%'),
+                  borderRadius: hp('3.5%'),
+                  marginRight: wp('-8%'),
+                }}
+              />
+            {/* </TouchableOpacity> */}
+
+            <HeaderTabs title={animalName} chatHeader />
+            <HeaderTabs title={nickname} chatHeader />
+          </>
+        ),
+        headerRightContainerStyle: {
+          // marginRight: wp('2%'),
+          width: wp('15%'),
+        },
+        headerTitleContainerStyle: {
+          flex: 1,
+          flexDirection: 'row',
+          width: wp('80%'),
+        },
+
+        headerLeftContainerStyle: {
+          marginLeft: wp('2%'),
+          height: 'auto',
+          width: wp('25%'),
+        },
+      };
+    },
   },
 });
 
@@ -195,7 +248,7 @@ const TabNavigator = createMaterialTopTabNavigator({
   }
 );
 
-export default () =>
+export default token =>
   createAppContainer(
     createSwitchNavigator(
       {
@@ -204,7 +257,7 @@ export default () =>
         AuthenticationSwitch,
       },
       {
-        initialRouteName: 'RegionChooseStack',
+        initialRouteName: token == "" ? 'RegionChooseStack' : 'TabNavigator',
       },
     ),
   );

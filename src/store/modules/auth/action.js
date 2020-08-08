@@ -12,7 +12,7 @@ export function signInSuccess(token) {
     }
 }
 
-export function signOut() {
+export function signOutAuth() {
     return {
         type: '@auth/SIGN_OUT',
         payload: { }

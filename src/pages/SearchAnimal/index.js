@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import Geolocation from 'react-native-geolocation-service';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,8 +26,10 @@ import {
 } from './styles';
 
 import GeolocationHelper from '../../helpers/geolocationHelper';
-import { getAnimalType } from '../../store/modules/animal/action';
+import { getAnimalType, signOutAnimal } from '../../store/modules/animal/action';
 import { setSearchInfo, setRegion } from '../../store/modules/commons/action';
+import { signOutAuth } from '../../store/modules/auth/action';
+import { signOutChat } from '../../store/modules/chat/action';
 
 export default function SearchAnimal({ navigation }) {
 
@@ -60,6 +62,12 @@ export default function SearchAnimal({ navigation }) {
     });
   }, [animalTypes]);
 
+  function signOut() {
+    dispatch(signOutAuth());
+    dispatch(signOutAnimal());
+    dispatch(signOutChat());
+  }
+
   async function verifyLocationPermission() {
     PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
       .then(response => {
@@ -88,17 +96,11 @@ export default function SearchAnimal({ navigation }) {
 
 
   async function searchCep(cep) {
-    if(!cep) {
-      dispatch(setRegion(''));
-      navigation.navigate('TabNavigator');
-    } else{
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json`);
       if(response.data?.localidade != null) {
         dispatch(setRegion(response.data.localidade));
       }
       navigation.navigate('TabNavigator');
-    }
-    
   };
 
   return (
@@ -154,8 +156,10 @@ export default function SearchAnimal({ navigation }) {
                       onPress={() => setCastrated(!castrated)}  
                     />
                   </CheckBoxRow>
-
-                  <Information>Caso queira trocar a região já informada</Information>
+                  <TouchableOpacity onPress={() => signOut()}>
+                    <Information>Caso queira trocar a região já informada</Information>
+                  </TouchableOpacity>
+                  
                   <TextHolderInput>Cep</TextHolderInput>
                   <FormInputMask
                     error={true}

@@ -26,6 +26,13 @@ export function getAnimalType() {
     }
 }
 
+export function signOutAnimal() {
+    return {
+        type: '@animal/SIGN_OUT',
+        payload: {}
+    }
+}
+
 export function getAnimalTypeSuccess(animalTypes) {
     return {
         type: '@animal/GET_ANIMAL_TYPE_SUCCESS',
@@ -41,9 +48,37 @@ export function getAllAnimal() {
     }
 }
 
+export function getAllInterested() {
+    return {
+        type: '@animal/GET_ALL_INTERESTED',
+        payload: {}
+    }
+}
+
+export function getAllAdopted() {
+    return {
+        type: '@animal/GET_ALL_ADOPTED',
+        payload: {}
+    }
+}
+
 export function getAllAnimalSuccess(animals) {
     return {
         type: '@animal/GET_ALL_ANIMAL_SUCCESS',
+        payload: { animals }
+    }
+}
+
+export function getAllInterestedAnimalSuccess(animals) {
+    return {
+        type: '@animal/GET_ALL_ANIMAL_INTERESTED_SUCCESS',
+        payload: { animals }
+    }
+}
+
+export function getAllAdoptedAnimalSuccess(animals) {
+    return {
+        type: '@animal/GET_ALL_ANIMAL_ADOPTED_SUCCESS',
         payload: { animals }
     }
 }

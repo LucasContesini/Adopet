@@ -5,6 +5,7 @@ import tkn from '../../../config/token';
 import NavigationService from '../../../services/navigation';
 
 import { signInSuccess, signInFailed, signUpSuccess, signUpFailed, getUserInfoSuccess } from './action';
+import { getListChat } from '../chat/action';
 export function* signIn({ payload }) {
     try {
         const body = {
@@ -40,6 +41,7 @@ export function* getUserInfo({ payload }) {
             `${baseUrl}/user`);
         const { id, email, nickname, uid } = response.data;
             yield put(getUserInfoSuccess(id, email, nickname, uid));
+            yield put(getListChat(uid));
     } catch(error) {
     }   
 }

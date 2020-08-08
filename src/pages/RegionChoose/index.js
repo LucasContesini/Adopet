@@ -56,16 +56,11 @@ export default function RegionChoose({ navigation }) {
       }
 
   async function searchCep(cep) {
-    if(!cep) {
-      dispatch(setRegion(''));
-      navigation.navigate('TabNavigator');
-    } else { 
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json`);
       if(response.data?.localidade != null) {
         dispatch(setRegion(response.data.localidade));
       }
       navigation.navigate('TabNavigator');
-  }
   };
 
   return (

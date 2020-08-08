@@ -35,12 +35,13 @@ export default function ChatList({ navigation, isMessage }) {
   }
 
   async function chat() {
+    console.tron.log(uid);
     await dispatch(getListChat(uid));
   }
 
-  useEffect(() => {
-    chat();
-  }, []);
+  // useEffect(() => {
+  //   chat();
+  // }, []);
 
   if (chats === '') {
     return (

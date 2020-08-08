@@ -29,6 +29,12 @@ export default function chat(state = INITIAL_STATE, action) {
                 draft.activeChatMessages = action.payload.allMessages;
                 break;
               }
-        }
+              case '@chat/SIGN_OUT': {
+                draft.activeChatMessages = '';
+                draft.activeChat = '';
+                draft.chats = [];
+                break;
+              }
+          }
     });
 }

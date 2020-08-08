@@ -4,7 +4,7 @@ import baseUrl from '../../../services/baseUrl';
 import tkn from '../../../config/token';
 import NavigationService from '../../../services/navigation';
 
-import { getAnimalTypeSuccess, getAllAnimalSuccess, getAnimalInfoByIdSuccess, getAllOwnedAnimalSuccess } from './action';
+import { getAnimalTypeSuccess, getAllAnimalSuccess, getAllInterestedAnimalSuccess, getAllAdoptedAnimalSuccess, getAnimalInfoByIdSuccess, getAllOwnedAnimalSuccess } from './action';
 import { setRender } from '../commons/action';
 
 export function* findAnimalType({ payload }) {
@@ -47,6 +47,36 @@ export function* findAllAnimal({ payload }) {
             `${baseUrl}/animal?id=${id}&city=${city}&type=${type}&vaccinated=${vaccinated}&castrated=${castrated}`
         );
         yield put(getAllAnimalSuccess(response.data));
+    } catch(error) {   
+    }
+}
+
+export function* findAllInterested({ payload }) {
+    try {
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        const response = yield call (
+            axios.get,
+            `${baseUrl}/animal/interested`
+        );
+        yield put(getAllInterestedAnimalSuccess(response.data));
+    } catch(error) {   
+    }
+}
+
+export function* findAllAdopted({ payload }) {
+    try {
+        const tokenSelector = state => state.auth.token;
+        const token = yield select(tokenSelector);
+
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        const response = yield call (
+            axios.get,
+            `${baseUrl}/animal/adopted`
+        );
+        yield put(getAllAdoptedAnimalSuccess(response.data));
     } catch(error) {   
     }
 }
@@ -274,6 +304,8 @@ export function* deleteAnimal({payload}) {
 export default all([
     takeLatest('@animal/GET_ANIMAL_TYPE', findAnimalType),
     takeLatest('@animal/GET_ALL_ANIMAL', findAllAnimal),
+    takeLatest('@animal/GET_ALL_INTERESTED', findAllInterested),
+    takeLatest('@animal/GET_ALL_ADOPTED', findAllAdopted),
     takeLatest('@animal/GET_ALL_OWNED_ANIMAL', findAllOwnedAnimal),
     takeLatest('@animal/GET_ANIMAL_BY_ID', findAnimalById),
     takeLatest('@animal/SAVE_ANIMAL', saveAnimal),

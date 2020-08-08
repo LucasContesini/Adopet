@@ -21,6 +21,7 @@ export default function auth(state = INITIAL_STATE, action) {
             case '@auth/SIGN_OUT': {
                 draft.token = '';
                 draft.id = 0;
+                draft.uid = '';
                 draft.email = '';
                 draft.nickname = '';
                 break;

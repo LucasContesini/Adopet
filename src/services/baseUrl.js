@@ -1,3 +1,3 @@
-const baseUrl = 'http://192.168.15.32:8080';
+const baseUrl = 'http://3.236.139.27:8080';
 
 export default baseUrl;

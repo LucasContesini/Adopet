@@ -102,6 +102,15 @@ export const setActiveChat = (chatId, data) => {
     };
   };
 
+  export const signOutChat = () => {
+    return dispatch => {
+      dispatch({
+        type: '@chat/SIGN_OUT',
+        payload: {},
+      });
+    };
+  };
+
   export const clearActiveMessage = () => {
     return dispatch => {
       dispatch({
@@ -124,6 +133,7 @@ export const setActiveChat = (chatId, data) => {
 
   
   export const getListChat = uid => {
+    console.tron.log(uid);
     return dispatch => {
       firestore()
         .collection('users')

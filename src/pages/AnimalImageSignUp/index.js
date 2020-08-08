@@ -2,6 +2,7 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -20,7 +21,7 @@ import {
 import { saveAnimal } from '../../store/modules/animal/action';
 import DateHelper from '../../helpers/dateHelper';
 import storage from '@react-native-firebase/storage';
-
+import colors from '../../config/color';
 
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
 
@@ -29,7 +30,7 @@ export default function AnimalImageSignUp({ navigation }) {
   const dispatch = useDispatch();
 
   const [images, setImages] = useState([]);
-
+  const [downloading, setDownloading] = useState(false);
 
   const name = useSelector(state => state.animal.name);
   const type = useSelector(state => state.animal.type);
@@ -88,6 +89,7 @@ export default function AnimalImageSignUp({ navigation }) {
           100,
           rotation,
         ).then(({ uri }) => {
+          setDownloading(true);
           const uriResize = uri.replace('file://', '');
           RNFetchBlob.fs.readFile(uriResize, 'base64').then(data => {
             return RNFetchBlob.polyfill.Blob.build(data, {
@@ -100,12 +102,15 @@ export default function AnimalImageSignUp({ navigation }) {
                 await fbImage.putFile(blob._ref, { contentType: 'image/jpeg' });
                 const url = await fbImage.getDownloadURL();
                 setImages([...images, url]);
+                setDownloading(false);
               } catch (err) {
+                setDownloading(false);
                 console.tron.log(err);
               }
             });
           });
         });
+        setDownloading(false);
       }
     });
   }
@@ -125,6 +130,11 @@ export default function AnimalImageSignUp({ navigation }) {
             <AnimalImage source={{ uri: images[4] ? images[4] : noPhoto}}/>
             <AnimalImage source={{ uri: images[5] ? images[5] : noPhoto}}/>
           </ImageRow>
+          {downloading ? (
+            <ActivityIndicator size="large" color= {colors.secondary}/>
+          ) : (
+            <View></View>
+          )}
           
           <AddPhotoButton title="Adicionar foto" onPress={addPhoto}></AddPhotoButton>
         </Body>

@@ -4,7 +4,7 @@ import baseUrl from '../../../services/baseUrl';
 import tkn from '../../../config/token';
 import NavigationService from '../../../services/navigation';
 
-import { signInSuccess, signInFailed, signUpSuccess, signUpFailed, getUserInfoSuccess } from './action';
+import { signInSuccess, signInFailed, signUpSuccess, signUpFailed, getUserInfoSuccess, getUserInfo } from './action';
 import { getListChat } from '../chat/action';
 export function* signIn({ payload }) {
     try {
@@ -18,7 +18,7 @@ export function* signIn({ payload }) {
             body);
             
             yield put(signInSuccess(response.data.token));
-            NavigationService.navigate('TabNavigator');
+            yield put(getUserInfo());
     } catch(error) {
         console.tron.log(error.response);
         if(error.response.status === 401) {
@@ -27,7 +27,7 @@ export function* signIn({ payload }) {
     }   
 }
 
-export function* getUserInfo({ payload }) {
+export function* getUserInfoRequest({ payload }) {
     try {
 
         const tokenSelector = state => state.auth.token;
@@ -42,6 +42,7 @@ export function* getUserInfo({ payload }) {
         const { id, email, nickname, uid } = response.data;
             yield put(getUserInfoSuccess(id, email, nickname, uid));
             yield put(getListChat(uid));
+            NavigationService.navigate('TabNavigator');
     } catch(error) {
     }   
 }
@@ -70,5 +71,5 @@ export function* signUp({ payload }) {
 export default all([
     takeLatest('@auth/SIGN_IN', signIn),
     takeLatest('@auth/SIGN_UP', signUp),
-    takeLatest('@auth/GET_USER_INFO', getUserInfo),
+    takeLatest('@auth/GET_USER_INFO', getUserInfoRequest),
 ]);

@@ -49,16 +49,19 @@ export default function AnimalEdit({ navigation }) {
   }, []);
 
   useEffect(() => {
-    animalTypes.map(type => {
-      const obj = {
-        value: type.id,
-        label: type.name
-      }
-      animalType.push(obj);
-      if(animal.type === obj.label) {
-        setInicialValue(obj.value);
-      }
-    });
+    if(animalType.length == 0) {
+      animalTypes.map(type => {
+        const obj = {
+          value: type.id,
+          label: type.name
+        }
+        animalType.push(obj);
+        if(animal.type === obj.label) {
+          setInicialValue(obj.value);
+          setType(obj.value);
+        }
+      });
+    }
   }, [animalTypes]);
 
 

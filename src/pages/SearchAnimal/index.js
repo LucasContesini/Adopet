@@ -50,23 +50,20 @@ export default function SearchAnimal({ navigation }) {
   }, []);
 
   useEffect(() => {
-    animalTypes.map(type => {
-      const obj = {
-        value: type.id,
-        label: type.name
-      }
-      animalType.push(obj);
-      if(typeSearch && typeSearch === obj.value) {
-        setInicialValue(obj.value);
-      }
-    });
+    if(animalType.length == 0) {
+      animalTypes.map(type => {
+        const obj = {
+          value: type.id,
+          label: type.name
+        }
+        animalType.push(obj);
+        if(typeSearch && typeSearch === obj.value) {
+          setInicialValue(obj.value);
+          setType(obj.value);
+        }
+      });
+    }
   }, [animalTypes]);
-
-  function signOut() {
-    dispatch(signOutAuth());
-    dispatch(signOutAnimal());
-    dispatch(signOutChat());
-  }
 
   async function verifyLocationPermission() {
     PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
@@ -156,9 +153,7 @@ export default function SearchAnimal({ navigation }) {
                       onPress={() => setCastrated(!castrated)}  
                     />
                   </CheckBoxRow>
-                  <TouchableOpacity onPress={() => signOut()}>
-                    <Information>Caso queira trocar a região já informada</Information>
-                  </TouchableOpacity>
+                  <Information>Caso queira trocar a região já informada</Information>
                   
                   <TextHolderInput>Cep</TextHolderInput>
                   <FormInputMask

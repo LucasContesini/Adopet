@@ -21,7 +21,7 @@ import {
   TextAlert,
   FormInputMask
 } from './styles';
-import { setRegion } from '../../store/modules/commons/action';
+import { setRegion, setFirstAccess } from '../../store/modules/commons/action';
 import GeolocationHelper from '../../helpers/geolocationHelper';
 
 export default function RegionChoose({ navigation }) {
@@ -38,6 +38,7 @@ export default function RegionChoose({ navigation }) {
                     var city = await GeolocationHelper.getCityByLatAndLong(position.coords.latitude, position.coords.longitude);
                     if(city) {
                       dispatch(setRegion(city));
+                      dispatch(setFirstAccess());
                       navigation.navigate('TabNavigator');
                     }
                 },
@@ -60,6 +61,7 @@ export default function RegionChoose({ navigation }) {
       if(response.data?.localidade != null) {
         dispatch(setRegion(response.data.localidade));
       }
+      dispatch(setFirstAccess());
       navigation.navigate('TabNavigator');
   };
 

@@ -175,8 +175,7 @@ const ChatStack = createStackNavigator({
               />
             {/* </TouchableOpacity> */}
 
-            <HeaderTabs title={animalName} chatHeader />
-            <HeaderTabs title={nickname} chatHeader />
+            <HeaderTabs title={`${animalName}       Conversando com: ${nickname}`} chatHeader />
           </>
         ),
         headerRightContainerStyle: {
@@ -290,7 +289,7 @@ const TabNavigator = createMaterialTopTabNavigator({
   }
 );
 
-export default token =>
+export default firstAccess =>
   createAppContainer(
     createSwitchNavigator(
       {
@@ -299,7 +298,7 @@ export default token =>
         AuthenticationSwitch,
       },
       {
-        initialRouteName: token == "" ? 'RegionChooseStack' : 'TabNavigator',
+        initialRouteName: firstAccess == false ? 'RegionChooseStack' : 'TabNavigator',
       },
     ),
   );

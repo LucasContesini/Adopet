@@ -104,14 +104,13 @@ export function* findAnimalById({ payload }) {
     try {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
-
+        const userIdSelector = state => state.auth.id;
+        const userId = yield select(userIdSelector);
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        // axios.defaults.headers.Authorization = `Bearer ${tkn}`;
-        
         const { id, isEdit } = payload;
         const response = yield call (
             axios.get,
-            `${baseUrl}/animal/${id}`
+            `${baseUrl}/animal/${id}/user/${userId}`
         );
         yield put(getAnimalInfoByIdSuccess(response.data));
         if(isEdit)

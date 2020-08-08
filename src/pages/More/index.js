@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome'; 
 import LoveIcon from 'react-native-vector-icons/AntDesign';
 
-import { signOutAnimal } from '../../store/modules/animal/action';
+import { signOutAnimal, getAllAnimal, getAllOwnedAnimal } from '../../store/modules/animal/action';
 import { signOutAuth } from '../../store/modules/auth/action';
 import { signOutChat } from '../../store/modules/chat/action';
 
@@ -24,6 +24,8 @@ export default function More({ navigation }) {
     dispatch(signOutAuth());
     dispatch(signOutAnimal());
     dispatch(signOutChat());
+    dispatch(getAllAnimal());
+    dispatch(getAllOwnedAnimal());
   }
 
   return (

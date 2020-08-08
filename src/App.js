@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 console.disableYellowBox = true;
 
 export default function App() {
-  const token = useSelector(state => state.auth.token);
-  const Routes = createRouter(token);
+  const firstAccess = useSelector(state => state.commons.firstAccess);
+  const Routes = createRouter(firstAccess);
   return (
     <Routes
       ref={navigatorRef => {

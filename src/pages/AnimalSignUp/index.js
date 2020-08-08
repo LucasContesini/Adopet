@@ -50,13 +50,15 @@ export default function AnimalSignUp({ navigation }) {
   }, []);
 
   useEffect(() => {
-    animalTypes.map(type => {
-      const obj = {
-        value: type.id,
-        label: type.name
-      }
-      animalType.push(obj);
-    });
+    if(animalType.length == 0) {
+      animalTypes.map(type => {
+        const obj = {
+          value: type.id,
+          label: type.name
+        }
+        animalType.push(obj);
+      });
+    }
   }, [animalTypes]);
 
   async function validateCep() {

@@ -38,8 +38,8 @@ export const AddButton = styled(Button).attrs({
   containerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 50,
-    height: 50,
+    width: 55,
+    height: 55,
     bottom: 10,
     right: 10,
     position: 'absolute',

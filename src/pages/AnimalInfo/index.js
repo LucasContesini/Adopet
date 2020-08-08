@@ -101,6 +101,7 @@ export default function AnimalInfo({ navigation }) {
           </View>
           <View>
             <InfoCard>
+              {animal.user.id !== userId &&
               <View style={{flexDirection: 'row', justifyContent: "flex-end"}}>
                 {animal.liked ? 
                     <TouchableOpacity onPress={() => like(animal)}>
@@ -120,6 +121,7 @@ export default function AnimalInfo({ navigation }) {
                     </TouchableOpacity>
                    }
               </View>
+              }
               <Description>{animal.name}</Description>
               <Description>{birthDateValid}</Description>
               <Description>{animal.city}</Description>
@@ -130,8 +132,9 @@ export default function AnimalInfo({ navigation }) {
               <Description>{animal.description}</Description>
             </InfoCard> 
           </View>
-          
-          <AddPhotoButton onPress={() => handleMessage()} title="Adotar" />
+          {animal.user.id !== userId &&
+            <AddPhotoButton onPress={() => handleMessage()} title="Adotar" />
+          }
       </Container>
     </ScrollView>
   );

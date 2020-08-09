@@ -23,6 +23,7 @@ import { getUserInfo } from '../../store/modules/auth/action';
 import { setActiveChat, createChat } from '../../store/modules/chat/action';
 
 const noPhoto = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2Fsem-foto-sem-imagem-300x186.jpeg?alt=media&token=c1d83229-5655-4710-9d5a-5257e20bbdb1'; 
+const noAnimal = 'https://firebasestorage.googleapis.com/v0/b/adopet-17316.appspot.com/o/images%2FMobile_border.webp?alt=media&token=0329e9a3-3d71-4b3d-98af-bd72f50021db';
 
 export default function AnimalList({ navigation }) {
     const dispatch = useDispatch();
@@ -105,65 +106,72 @@ export default function AnimalList({ navigation }) {
   return (
     <ScrollView>
       <Container>
-        <Body>
-          {animals.map(animal => (
-            <View
-              style={{
-                marginBottom: 30,
-              }}>
-              <View>
-                <AnimalImage
-                  source={{ uri: animal.image ? animal.image : noPhoto }}
-                />
-              </View>
-
-              <InfoCard>
+        {animals.length != 0 ? 
+          <Body>
+            {animals.map(animal => (
+              <View
+                style={{
+                  marginBottom: 30,
+                }}>
                 <View>
-                  <Description>{animal.name}</Description>
-
-                  <Description>
-                    {animal.vaccinated ? 'Vacinado' : 'Não foi vacinado'}
-                  </Description>
-
-                  <Description>
-                    {animal.castrated ? 'Castrado' : 'Não foi castrado'}
-                  </Description>
+                  <AnimalImage
+                    source={{ uri: animal.image ? animal.image : noPhoto }}
+                  />
                 </View>
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: "center",
-                    justifyContent:'space-between',
-                  }}>
-                  {animal.liked ? 
-                    <TouchableOpacity onPress={() => like(animal)}>
-                      <Icon name="like1" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   : <TouchableOpacity onPress={() => like(animal)}>
-                    <Icon name="like2" size={40} style={{padding: 10}}/>
-                   </TouchableOpacity>
-                   }
-                   
-                  {animal.loved ? 
-                    <TouchableOpacity onPress={() => love(animal)}>
-                      <Icon name="heart" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   : <TouchableOpacity onPress={() => love(animal)}>
-                      <Icon name="hearto" size={40} style={{padding: 10}}/>
-                    </TouchableOpacity>
-                   }
-                  <TouchableOpacity onPress={() => getAnimalInfo(animal.id)}>
-                    <IconInfo name="info" size={40} style={{padding: 10}}/>
-                  </TouchableOpacity>
-                  
-                </View>
-              </InfoCard>
+                <InfoCard>
+                  <View>
+                    <Description>{animal.name}</Description>
 
-              <AddPhotoButton onPress={() => handleMessage(animal)} title="Adotar" />
-            </View>
-          ))}
-        </Body>
+                    <Description>
+                      {animal.vaccinated ? 'Vacinado' : 'Não foi vacinado'}
+                    </Description>
+
+                    <Description>
+                      {animal.castrated ? 'Castrado' : 'Não foi castrado'}
+                    </Description>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: "center",
+                      justifyContent:'space-between',
+                    }}>
+                    {animal.liked ? 
+                      <TouchableOpacity onPress={() => like(animal)}>
+                        <Icon name="like1" size={40} style={{padding: 10}}/>
+                      </TouchableOpacity>
+                    : <TouchableOpacity onPress={() => like(animal)}>
+                      <Icon name="like2" size={40} style={{padding: 10}}/>
+                    </TouchableOpacity>
+                    }
+                    
+                    {animal.loved ? 
+                      <TouchableOpacity onPress={() => love(animal)}>
+                        <Icon name="heart" size={40} style={{padding: 10}}/>
+                      </TouchableOpacity>
+                    : <TouchableOpacity onPress={() => love(animal)}>
+                        <Icon name="hearto" size={40} style={{padding: 10}}/>
+                      </TouchableOpacity>
+                    }
+                    <TouchableOpacity onPress={() => getAnimalInfo(animal.id)}>
+                      <IconInfo name="info" size={40} style={{padding: 10}}/>
+                    </TouchableOpacity>
+                    
+                  </View>
+                </InfoCard>
+
+                <AddPhotoButton onPress={() => handleMessage(animal)} title="Adotar" />
+              </View>
+            ))}
+          </Body>
+        :
+          <Body>
+            <AnimalImage source={{uri: noAnimal}}/>
+            <Title>Nenhum animal foi encontrado</Title>
+          </Body>
+        }
       </Container>
     </ScrollView>
   );

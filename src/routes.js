@@ -152,7 +152,12 @@ const ChatStack = createStackNavigator({
     screen: Chat,
     navigationOptions: ({ navigation }) => {
       const data = navigation.getParam('data');
-      const { animalName, animalPhoto, nickname } = data;
+      const { animalName, animalPhoto, nickname, donorNickname } = data;
+      console.tron.log(nickname, donorNickname);
+      var userNickname = nickname;
+      if(nickname === undefined) {
+        userNickname = donorNickname;
+      } 
       return {
         headerStyle: {
           height: hp('10%'),
@@ -175,7 +180,7 @@ const ChatStack = createStackNavigator({
               />
             {/* </TouchableOpacity> */}
 
-            <HeaderTabs title={`${animalName}       Conversando com: ${nickname}`} chatHeader />
+            <HeaderTabs title={`${animalName}       Conversando com: ${userNickname}`} chatHeader />
           </>
         ),
         headerRightContainerStyle: {

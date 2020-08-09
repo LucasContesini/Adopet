@@ -24,6 +24,7 @@ export const Body = styled.View.attrs({})`
 export const Title = styled.Text`
   height: ${hp('21%')};
   padding-top: ${hp('8%')};
+  padding-left: ${hp('6%')};
   font-family: Avenir Next;
   font-size: ${wp('5%')};
   color: ${colors.primary};

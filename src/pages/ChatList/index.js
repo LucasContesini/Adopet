@@ -34,15 +34,6 @@ export default function ChatList({ navigation, isMessage }) {
     dispatch(setActiveChat(data.key, data));
   }
 
-  async function chat() {
-    console.tron.log(uid);
-    await dispatch(getListChat(uid));
-  }
-
-  // useEffect(() => {
-  //   chat();
-  // }, []);
-
   if (chats === '') {
     return (
       <View

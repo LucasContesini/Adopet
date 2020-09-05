@@ -55,13 +55,17 @@ export function* findAllInterested({ payload }) {
     try {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
+        if(!token) {
+            NavigationService.navigate('AuthenticationSwitch');
+        } else {
+            axios.defaults.headers.Authorization = `Bearer ${token}`;
+            const response = yield call (
+                axios.get,
+                `${baseUrl}/animal/interested`
+            );
+            yield put(getAllInterestedAnimalSuccess(response.data));
+        }
 
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        const response = yield call (
-            axios.get,
-            `${baseUrl}/animal/interested`
-        );
-        yield put(getAllInterestedAnimalSuccess(response.data));
     } catch(error) {   
     }
 }
@@ -71,12 +75,16 @@ export function* findAllAdopted({ payload }) {
         const tokenSelector = state => state.auth.token;
         const token = yield select(tokenSelector);
 
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        const response = yield call (
-            axios.get,
-            `${baseUrl}/animal/adopted`
-        );
-        yield put(getAllAdoptedAnimalSuccess(response.data));
+        if(!token) {
+            NavigationService.navigate('AuthenticationSwitch');
+        } else {
+            axios.defaults.headers.Authorization = `Bearer ${token}`;
+            const response = yield call (
+                axios.get,
+                `${baseUrl}/animal/adopted`
+            );
+            yield put(getAllAdoptedAnimalSuccess(response.data));
+        }
     } catch(error) {   
     }
 }

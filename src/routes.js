@@ -208,7 +208,8 @@ const ChatStack = createStackNavigator({
               />
             {/* </TouchableOpacity> */}
 
-            <HeaderTabs title={`${animalName}       Conversando com: ${userNickname}`} chatHeader />
+            <HeaderTabs title={`${animalName}
+            Conversando com: ${userNickname}`} chatHeader />
           </>
         ),
         headerRightContainerStyle: {

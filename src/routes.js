@@ -110,15 +110,43 @@ const AnimalStack = createStackNavigator({
   },
   AnimalSignUp: {
     screen: AnimalSignUp,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: (
+          <HeaderTabs title="Cadastro do animal" />
+        ),
+      }
+    }
   },
   AnimalImageSignUp : {
-    screen: AnimalImageSignUp
+    screen: AnimalImageSignUp,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: (
+          <HeaderTabs title="Cadastro do animal" />
+        ),
+      }
+    }
   },
   AnimalEdit: {
     screen: AnimalEdit,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: (
+          <HeaderTabs title="Edição do animal" />
+        ),
+      }
+    }
   },
   AnimalImageEdit : {
-    screen: AnimalImageEdit
+    screen: AnimalImageEdit,
+    navigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: (
+          <HeaderTabs title="Edição do animal" />
+        ),
+      }
+    }
   }
 });
 
